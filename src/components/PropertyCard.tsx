@@ -112,117 +112,68 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onClick, v
     );
   }
 
-  // List View (Horizontal Card - FIXED HEIGHT)
+  // List View (Horizontal Card)
   return (
     <div
       onClick={handleClick}
-      className="group cursor-pointer bg-white rounded-4xl overflow-hidden transition-all duration-300 hover:shadow-lg flex flex-row h-[200px] sm:h-[160px] md:h-[180px]"
-      style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}
+      className="group cursor-pointer bg-white rounded-3xl overflow-hidden transition-all duration-300 hover:shadow-lg flex flex-row h-[160px] sm:h-[150px] md:h-[170px]"
+      style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.08)' }}
     >
-      {/* Image Container - Mobile: smaller for more text space */}
-      <div className="relative w-[38%] sm:w-[35%] h-full overflow-hidden flex-shrink-0">
+      {/* Image - 40% on mobile, 35% on larger */}
+      <div className="relative w-[40%] sm:w-[35%] h-full overflow-hidden flex-shrink-0">
         <img
           src={property.image}
           alt={property.name}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-l-4xl"
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-l-3xl"
         />
       </div>
 
-      {/* MOBILE LAYOUT - All content visible, well spaced */}
-      <div className="flex sm:hidden flex-1 flex-col p-4 justify-between min-w-0">
-        {/* Top: Name + Project */}
+      {/* MOBILE LAYOUT - Clean single column */}
+      <div className="flex sm:hidden flex-col justify-between p-3 flex-1 min-w-0">
+        {/* Header: Title + Project */}
         <div className="min-w-0">
-          <h3
-            className="font-semibold text-[14px] text-[rgb(44,44,44)] leading-snug truncate"
-            style={{ fontFamily: 'Geist, sans-serif' }}
-          >
+          <h3 className="font-semibold text-[15px] text-[rgb(44,44,44)] leading-tight truncate" style={{ fontFamily: 'Geist, sans-serif' }}>
             {property.name}
           </h3>
-          <p
-            className="text-[11px] text-[rgb(136,136,136)] font-light mt-0.5 truncate"
-            style={{ fontFamily: 'Geist, sans-serif' }}
-          >
+          <p className="text-[12px] text-[rgb(136,136,136)] font-light mt-0.5 truncate" style={{ fontFamily: 'Geist, sans-serif' }}>
             {property.projectName}
           </p>
         </div>
 
-        {/* Middle: Specs in 2x2 grid */}
-        <div className="grid grid-cols-2 gap-x-2 gap-y-1 my-1">
-          <div className="flex items-center gap-1 text-[rgb(44,44,44)]">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-              <polyline points="9 22 9 12 15 12 15 22" />
-            </svg>
-            <span className="text-[11px] font-light" style={{ fontFamily: 'Geist, sans-serif' }}>
-              {getPropertyTypeLabel(property.propertyType)}
-            </span>
-          </div>
-          <div className="flex items-center gap-1 text-[rgb(44,44,44)]">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect x="3" y="3" width="18" height="18" rx="2" />
-              <path d="M3 9h18" />
-            </svg>
-            <span className="text-[11px] font-light" style={{ fontFamily: 'Geist, sans-serif' }}>
-              {property.spaceSqm}m²
-            </span>
-          </div>
-          <div className="flex items-center gap-1 text-[rgb(44,44,44)]">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M2 20h20" />
-              <path d="M5 20v-8a2 2 0 012-2h10a2 2 0 012 2v8" />
-            </svg>
-            <span className="text-[11px] font-light" style={{ fontFamily: 'Geist, sans-serif' }}>
-              {property.beds} Beds
-            </span>
-          </div>
-          <div className="flex items-center gap-1 text-[rgb(44,44,44)]">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M4 12h16" />
-              <path d="M4 18h16" />
-              <path d="M4 6h16" />
-            </svg>
-            <span className="text-[11px] font-light" style={{ fontFamily: 'Geist, sans-serif' }}>
-              {property.baths} Baths
-            </span>
-          </div>
+        {/* Specs: Inline with dots */}
+        <div className="flex items-center gap-1.5 text-[rgb(102,102,102)] text-[12px] overflow-hidden">
+          <span className="font-light whitespace-nowrap bg-[rgb(245,245,245)] px-2 py-0.5 rounded-full" style={{ fontFamily: 'Geist, sans-serif' }}>
+            {getPropertyTypeLabel(property.propertyType)}
+          </span>
+          <span className="text-[rgb(199,199,199)]">•</span>
+          <span className="font-light whitespace-nowrap" style={{ fontFamily: 'Geist, sans-serif' }}>
+            {property.spaceSqm}m²
+          </span>
+          <span className="text-[rgb(199,199,199)]">•</span>
+          <span className="font-light whitespace-nowrap" style={{ fontFamily: 'Geist, sans-serif' }}>
+            {property.beds}bd
+          </span>
         </div>
 
-        {/* Bottom: Price */}
-        <span
-          className="font-semibold text-[15px] text-[rgb(44,44,44)] truncate"
-          style={{ fontFamily: 'Geist, sans-serif' }}
-        >
-          {formatPrice(property.price)}
-        </span>
+        {/* Price */}
+        <div className="flex items-center justify-between">
+          <span className="font-semibold text-[16px] text-[rgb(44,44,44)]" style={{ fontFamily: 'Geist, sans-serif' }}>
+            {formatPrice(property.price)}
+          </span>
+        </div>
       </div>
 
       {/* TABLET & DESKTOP LAYOUT */}
       <div className="hidden sm:flex flex-1 flex-col p-4 md:p-5 min-w-0 justify-between">
-        
-        {/* Top Section - Property Info */}
         <div className="min-w-0">
-          {/* Property Name */}
-          <h3
-            className="font-semibold text-[15px] md:text-[20px] text-[rgb(44,44,44)] leading-snug truncate"
-            style={{ fontFamily: 'Geist, sans-serif' }}
-          >
+          <h3 className="font-semibold text-[16px] md:text-[20px] text-[rgb(44,44,44)] leading-snug truncate" style={{ fontFamily: 'Geist, sans-serif' }}>
             {property.name}
           </h3>
-
-          {/* Project Name */}
-          <p
-            className="text-[12px] md:text-[14px] text-[rgb(136,136,136)] font-light mt-0.5 md:mt-1 truncate"
-            style={{ fontFamily: 'Geist, sans-serif' }}
-          >
+          <p className="text-[13px] md:text-[14px] text-[rgb(136,136,136)] font-light mt-0.5 truncate" style={{ fontFamily: 'Geist, sans-serif' }}>
             {property.projectName}
           </p>
-
-          {/* Specs Row */}
-          <div className="flex items-center gap-2 md:gap-3 text-[rgb(136,136,136)] text-[12px] md:text-[14px] mt-1 md:mt-2">
-            <span 
-              className="font-light bg-[rgb(243,243,243)] md:bg-transparent px-1.5 py-0.5 rounded md:px-0 md:py-0 whitespace-nowrap"
-              style={{ fontFamily: 'Geist, sans-serif' }}
-            >
+          <div className="flex items-center gap-2 md:gap-3 text-[rgb(136,136,136)] text-[13px] md:text-[14px] mt-1.5">
+            <span className="font-light whitespace-nowrap" style={{ fontFamily: 'Geist, sans-serif' }}>
               {getPropertyTypeLabel(property.propertyType)}
             </span>
             <span className="text-[rgb(199,199,199)]">•</span>
@@ -236,19 +187,11 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onClick, v
           </div>
         </div>
 
-        {/* Bottom Section - Price and Action */}
-        <div className="flex items-end justify-between mt-2">
-          <span
-            className="font-semibold text-[16px] md:text-[20px] text-[rgb(44,44,44)] truncate pr-2"
-            style={{ fontFamily: 'Geist, sans-serif' }}
-          >
+        <div className="flex items-end justify-between">
+          <span className="font-semibold text-[17px] md:text-[20px] text-[rgb(44,44,44)] truncate" style={{ fontFamily: 'Geist, sans-serif' }}>
             {formatPrice(property.price)}
           </span>
-          
-          <span
-            className="text-[13px] md:text-[14px] font-light text-[rgb(136,136,136)] group-hover:text-[rgb(44,44,44)] transition-colors whitespace-nowrap flex-shrink-0"
-            style={{ fontFamily: 'Geist, sans-serif' }}
-          >
+          <span className="text-[13px] md:text-[14px] font-light text-[rgb(136,136,136)] group-hover:text-[rgb(44,44,44)] transition-colors whitespace-nowrap" style={{ fontFamily: 'Geist, sans-serif' }}>
             View →
           </span>
         </div>
