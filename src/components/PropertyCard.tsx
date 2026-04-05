@@ -112,41 +112,42 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onClick, v
     );
   }
 
-  // List View (Responsive: Vertical on Mobile, Horizontal on Desktop)
+  // List View (Horizontal Card - Same layout on all screen sizes)
+  // Image on left (35%), content on right (65%)
   return (
     <div
       onClick={handleClick}
-      className="group cursor-pointer bg-white rounded-4xl overflow-hidden transition-all duration-300 hover:shadow-lg flex flex-col md:flex-row"
+      className="group cursor-pointer bg-white rounded-4xl overflow-hidden transition-all duration-300 hover:shadow-lg flex flex-row"
       style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}
     >
-      {/* Image Container - Mobile: Full width top, Desktop: Left side 35% */}
-      <div className="relative w-full md:w-[35%] h-[180px] md:h-auto md:min-h-[200px] overflow-hidden">
+      {/* Image Container - Fixed 35% width on all screens */}
+      <div className="relative w-[35%] min-h-[140px] sm:min-h-[180px] overflow-hidden">
         <img
           src={property.image}
           alt={property.name}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-4xl md:rounded-l-4xl md:rounded-tr-none"
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-l-4xl"
         />
       </div>
 
-      {/* Content - Mobile: Full width bottom, Desktop: Right side 65% */}
-      <div className="p-4 md:p-5 flex-1 flex flex-col justify-center">
-        {/* Property Name */}
+      {/* Content - 65% width */}
+      <div className="p-3 sm:p-4 md:p-5 flex-1 flex flex-col justify-center min-w-0">
+        {/* Property Name - Truncate on small screens */}
         <h3
-          className="font-semibold text-[18px] md:text-[22px] text-[rgb(44,44,44)] mb-1 md:mb-2"
+          className="font-semibold text-[15px] sm:text-[18px] md:text-[22px] text-[rgb(44,44,44)] mb-1 truncate"
           style={{ fontFamily: 'Geist, sans-serif' }}
         >
           {property.name}
         </h3>
 
-        {/* Project Name */}
+        {/* Project Name - Hidden on very small screens */}
         <p
-          className="text-[13px] md:text-[15px] text-[rgb(136,136,136)] font-light mb-1 md:mb-2"
+          className="hidden sm:block text-[13px] md:text-[15px] text-[rgb(136,136,136)] font-light mb-1 md:mb-2"
           style={{ fontFamily: 'Geist, sans-serif' }}
         >
           {property.projectName}
         </p>
 
-        {/* Location - Hidden on mobile to save space */}
+        {/* Location - Hidden on mobile */}
         <div className="hidden md:flex items-center gap-1 mb-3">
           <svg
             width="18"
@@ -161,26 +162,24 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onClick, v
             <circle cx="12" cy="10" r="3" />
           </svg>
           <span
-            className="text-[15px] text-[rgb(44,44,44)] font-light"
+            className="text-[15px] text-[rgb(44,44,44)] font-light truncate"
             style={{ fontFamily: 'Geist, sans-serif' }}
           >
             {property.location}
           </span>
         </div>
 
-        {/* Specs Row - Mobile: Compact, Desktop: Full */}
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 md:gap-x-4 md:gap-y-2 text-[rgb(136,136,136)] text-[13px] md:text-[14px] mb-3 md:mb-4">
+        {/* Specs Row - Compact on mobile */}
+        <div className="flex flex-wrap items-center gap-x-2 sm:gap-x-3 gap-y-1 text-[rgb(136,136,136)] text-[12px] sm:text-[13px] md:text-[14px] mb-2 md:mb-4">
           <span className="font-light" style={{ fontFamily: 'Geist, sans-serif' }}>
-            <span className="md:hidden">{getPropertyTypeLabel(property.propertyType)}</span>
-            <span className="hidden md:inline">Type: <span className="text-[rgb(44,44,44)]">{getPropertyTypeLabel(property.propertyType)}</span></span>
+            {getPropertyTypeLabel(property.propertyType)}
           </span>
           <span className="text-[rgb(199,199,199)]">•</span>
           <span className="font-light" style={{ fontFamily: 'Geist, sans-serif' }}>
-            <span className="md:hidden">{property.spaceSqm}m²</span>
-            <span className="hidden md:inline">Space: <span className="text-[rgb(44,44,44)]">{property.spaceSqm} m²</span></span>
+            {property.spaceSqm}m²
           </span>
-          <span className="text-[rgb(199,199,199)]">•</span>
-          <span className="font-light" style={{ fontFamily: 'Geist, sans-serif' }}>
+          <span className="text-[rgb(199,199,199)] hidden sm:inline">•</span>
+          <span className="font-light hidden sm:inline" style={{ fontFamily: 'Geist, sans-serif' }}>
             {property.beds} Beds
           </span>
           <span className="text-[rgb(199,199,199)] hidden md:inline">•</span>
@@ -190,9 +189,9 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onClick, v
         </div>
 
         {/* Price and Button Row */}
-        <div className="flex items-center justify-between mt-auto pt-2 md:pt-0 border-t md:border-t-0 border-[rgb(243,243,243)]">
+        <div className="flex items-center justify-between mt-auto">
           <span
-            className="font-semibold text-[18px] md:text-[22px] text-[rgb(44,44,44)]"
+            className="font-semibold text-[15px] sm:text-[18px] md:text-[22px] text-[rgb(44,44,44)]"
             style={{ fontFamily: 'Geist, sans-serif' }}
           >
             {formatPrice(property.price)}
@@ -200,7 +199,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onClick, v
           
           {/* View Details Button */}
           <span
-            className="text-[13px] md:text-[14px] font-light text-[rgb(136,136,136)] group-hover:text-[rgb(44,44,44)] transition-colors"
+            className="text-[12px] sm:text-[13px] md:text-[14px] font-light text-[rgb(136,136,136)] group-hover:text-[rgb(44,44,44)] transition-colors"
             style={{ fontFamily: 'Geist, sans-serif' }}
           >
             View →
