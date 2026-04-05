@@ -1,21 +1,17 @@
 import React from 'react';
 import { PropertyCard } from '../components/PropertyCard';
 import { HeroSection } from '../components/HeroSection';
-import { FilterBar } from '../components/FilterBar';
-import { properties, Property } from '../data/properties';
+import { properties } from '../data/properties';
 
 interface PropertiesListingProps {
   onPropertyClick?: (id: string) => void;
 }
 
 export const PropertiesListing: React.FC<PropertiesListingProps> = ({ onPropertyClick }) => {
-  const [activeFilter, setActiveFilter] = React.useState('all');
   const [sortBy, setSortBy] = React.useState('featured');
   const [viewMode, setViewMode] = React.useState<'grid' | 'list'>('grid');
   const [searchQuery, setSearchQuery] = React.useState('');
-  
-  // New filter states
-  const [projectSearch, setProjectSearch] = React.useState('');
+  const [selectedProject, setSelectedProject] = React.useState('');
   const [propertyTypeFilter, setPropertyTypeFilter] = React.useState('');
   const [minSpace, setMinSpace] = React.useState('');
   const [maxSpace, setMaxSpace] = React.useState('');
@@ -25,11 +21,6 @@ export const PropertiesListing: React.FC<PropertiesListingProps> = ({ onProperty
   // Filter and sort properties
   const filteredProperties = React.useMemo(() => {
     let result = [...properties];
-
-    // Filter by category
-    if (activeFilter !== 'all') {
-      result = result.filter((p) => p.category === activeFilter);
-    }
 
     // Filter by location search query
     if (searchQuery) {
@@ -41,12 +32,9 @@ export const PropertiesListing: React.FC<PropertiesListingProps> = ({ onProperty
       );
     }
 
-    // Filter by project name
-    if (projectSearch) {
-      const query = projectSearch.toLowerCase();
-      result = result.filter((p) =>
-        p.projectName.toLowerCase().includes(query)
-      );
+    // Filter by project selection
+    if (selectedProject) {
+      result = result.filter((p) => p.projectName === selectedProject);
     }
 
     // Filter by property type
@@ -86,7 +74,7 @@ export const PropertiesListing: React.FC<PropertiesListingProps> = ({ onProperty
     }
 
     return result;
-  }, [activeFilter, sortBy, searchQuery, projectSearch, propertyTypeFilter, minSpace, maxSpace]);
+  }, [sortBy, searchQuery, selectedProject, propertyTypeFilter, minSpace, maxSpace]);
 
   const visibleProperties = filteredProperties.slice(0, visibleCount);
   const hasMore = visibleCount < filteredProperties.length;
@@ -103,47 +91,28 @@ export const PropertiesListing: React.FC<PropertiesListingProps> = ({ onProperty
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <HeroSection onSearch={setSearchQuery} />
-
-      {/* Filter Bar */}
-      <FilterBar
-        activeFilter={activeFilter}
-        onFilterChange={setActiveFilter}
-        resultsCount={filteredProperties.length}
-        sortBy={sortBy}
-        onSortChange={setSortBy}
+      {/* Hero Section with Unified Search Bar */}
+      <HeroSection
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
         viewMode={viewMode}
         onViewModeChange={setViewMode}
-        projectSearch={projectSearch}
-        onProjectSearchChange={setProjectSearch}
+        sortBy={sortBy}
+        onSortChange={setSortBy}
         propertyType={propertyTypeFilter}
         onPropertyTypeChange={setPropertyTypeFilter}
+        selectedProject={selectedProject}
+        onProjectChange={setSelectedProject}
         minSpace={minSpace}
         onMinSpaceChange={setMinSpace}
         maxSpace={maxSpace}
         onMaxSpaceChange={setMaxSpace}
+        resultsCount={filteredProperties.length}
       />
 
       {/* Properties Grid/List */}
       <section className="py-12 md:py-16">
         <div className="max-w-[1360px] mx-auto px-4 md:px-8 lg:px-20">
-          {/* Section Title */}
-          <div className="mb-8">
-            <h2
-              className="text-[24px] sm:text-[32px] font-semibold uppercase text-[rgb(44,44,44)] mb-2"
-              style={{ fontFamily: 'Geist, sans-serif' }}
-            >
-              Available Properties
-            </h2>
-            <p
-              className="text-[16px] text-[rgb(136,136,136)] font-light"
-              style={{ fontFamily: 'Geist, sans-serif' }}
-            >
-              Browse our collection of premium real estate
-            </p>
-          </div>
-
           {/* Grid/List */}
           <div
             className={`grid gap-6 ${
@@ -187,7 +156,7 @@ export const PropertiesListing: React.FC<PropertiesListingProps> = ({ onProperty
                 className="text-[14px] text-[rgb(136,136,136)] font-light"
                 style={{ fontFamily: 'Geist, sans-serif' }}
               >
-                Try adjusting your filters or search query
+                Try adjusting your filters
               </p>
             </div>
           )}
