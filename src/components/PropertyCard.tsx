@@ -119,8 +119,8 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onClick, v
       className="group cursor-pointer bg-white rounded-4xl overflow-hidden transition-all duration-300 hover:shadow-lg flex flex-row h-[200px] sm:h-[160px] md:h-[180px]"
       style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}
     >
-      {/* Image Container - Mobile takes more space */}
-      <div className="relative w-[48%] sm:w-[35%] h-full overflow-hidden flex-shrink-0">
+      {/* Image Container - Mobile: smaller for more text space */}
+      <div className="relative w-[38%] sm:w-[35%] h-full overflow-hidden flex-shrink-0">
         <img
           src={property.image}
           alt={property.name}
