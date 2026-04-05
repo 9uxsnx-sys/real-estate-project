@@ -128,53 +128,61 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onClick, v
         />
       </div>
 
-      {/* Content */}
-      <div className="p-4 sm:p-4 md:p-5 flex-1 flex flex-col min-w-0 overflow-hidden">
-        {/* Property Name - Responsive sizing */}
-        <h3
-          className="font-semibold text-[14px] sm:text-[16px] md:text-[20px] text-[rgb(44,44,44)] leading-tight mb-1.5 truncate"
-          style={{ fontFamily: 'Geist, sans-serif' }}
-        >
-          {property.name}
-        </h3>
+      {/* Content - Adaptive padding and spacing */}
+      <div className="p-3 sm:p-4 md:p-5 flex-1 flex flex-col min-w-0 justify-between">
+        
+        {/* Top Section - Property Info */}
+        <div className="min-w-0">
+          {/* Property Name - Most important, always visible */}
+          <h3
+            className="font-semibold text-[13px] sm:text-[15px] md:text-[20px] text-[rgb(44,44,44)] leading-snug truncate"
+            style={{ fontFamily: 'Geist, sans-serif' }}
+          >
+            {property.name}
+          </h3>
 
-        {/* Project Name */}
-        <p
-          className="text-[12px] sm:text-[13px] md:text-[14px] text-[rgb(136,136,136)] font-light mb-2 truncate"
-          style={{ fontFamily: 'Geist, sans-serif' }}
-        >
-          {property.projectName}
-        </p>
+          {/* Project Name - Hidden on very small screens */}
+          <p
+            className="text-[11px] sm:text-[12px] md:text-[14px] text-[rgb(136,136,136)] font-light mt-0.5 sm:mt-1 truncate hidden sm:block"
+            style={{ fontFamily: 'Geist, sans-serif' }}
+          >
+            {property.projectName}
+          </p>
 
-        {/* Specs Row - Responsive */}
-        <div className="flex flex-wrap items-center gap-x-2 sm:gap-x-3 gap-y-1 text-[rgb(136,136,136)] text-[11px] sm:text-[12px] md:text-[14px] mb-2">
-          <span className="font-light whitespace-nowrap" style={{ fontFamily: 'Geist, sans-serif' }}>
-            {getPropertyTypeLabel(property.propertyType)}
-          </span>
-          <span className="text-[rgb(199,199,199)]">•</span>
-          <span className="font-light whitespace-nowrap" style={{ fontFamily: 'Geist, sans-serif' }}>
-            {property.spaceSqm}m²
-          </span>
-          <span className="text-[rgb(199,199,199)] hidden xs:inline">•</span>
-          <span className="font-light hidden xs:inline whitespace-nowrap" style={{ fontFamily: 'Geist, sans-serif' }}>
-            {property.beds} Beds
-          </span>
+          {/* Specs Row - Compact on mobile */}
+          <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3 text-[rgb(136,136,136)] text-[10px] sm:text-[12px] md:text-[14px] mt-1 sm:mt-2">
+            <span 
+              className="font-light bg-[rgb(243,243,243)] px-1.5 py-0.5 rounded sm:bg-transparent sm:px-0 sm:py-0 whitespace-nowrap"
+              style={{ fontFamily: 'Geist, sans-serif' }}
+            >
+              {getPropertyTypeLabel(property.propertyType)}
+            </span>
+            <span className="text-[rgb(199,199,199)] hidden sm:inline">•</span>
+            <span className="font-light whitespace-nowrap" style={{ fontFamily: 'Geist, sans-serif' }}>
+              {property.spaceSqm}m²
+            </span>
+            <span className="text-[rgb(199,199,199)] hidden md:inline">•</span>
+            <span className="font-light hidden md:inline whitespace-nowrap" style={{ fontFamily: 'Geist, sans-serif' }}>
+              {property.beds} Beds
+            </span>
+          </div>
         </div>
 
-        {/* Price and Button Row - Always at bottom */}
-        <div className="flex items-center justify-between mt-auto pt-1">
+        {/* Bottom Section - Price and Action */}
+        <div className="flex items-end justify-between mt-1 sm:mt-2">
           <span
-            className="font-semibold text-[14px] sm:text-[15px] md:text-[20px] text-[rgb(44,44,44)] truncate mr-2"
+            className="font-semibold text-[14px] sm:text-[16px] md:text-[20px] text-[rgb(44,44,44)] truncate pr-2"
             style={{ fontFamily: 'Geist, sans-serif' }}
           >
             {formatPrice(property.price)}
           </span>
           
           <span
-            className="text-[12px] sm:text-[13px] md:text-[14px] font-light text-[rgb(136,136,136)] group-hover:text-[rgb(44,44,44)] transition-colors whitespace-nowrap flex-shrink-0"
+            className="text-[11px] sm:text-[13px] md:text-[14px] font-light text-[rgb(136,136,136)] group-hover:text-[rgb(44,44,44)] transition-colors whitespace-nowrap flex-shrink-0 bg-[rgb(243,243,243)] sm:bg-transparent px-2 py-1 sm:px-0 sm:py-0 rounded-full"
             style={{ fontFamily: 'Geist, sans-serif' }}
           >
-            View →
+            <span className="hidden sm:inline">View →</span>
+            <span className="sm:hidden">→</span>
           </span>
         </div>
       </div>
