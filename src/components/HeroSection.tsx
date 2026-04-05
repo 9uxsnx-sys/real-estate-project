@@ -30,8 +30,7 @@ const CustomDropdown: React.FC<{
   options: DropdownOption[];
   onChange: (value: string) => void;
   placeholder?: string;
-  width?: string;
-}> = ({ value, options, onChange, placeholder = 'Select...', width = 'w-auto' }) => {
+}> = ({ value, options, onChange, placeholder = 'Select...' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -48,10 +47,10 @@ const CustomDropdown: React.FC<{
   }, []);
 
   return (
-    <div ref={dropdownRef} className={`relative ${width}`}>
+    <div ref={dropdownRef} className="relative flex-1 min-w-[120px] max-w-[200px]">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-4 py-2 bg-[rgb(243,243,243)] rounded-full text-[14px] font-light outline-none cursor-pointer flex items-center justify-between gap-2 hover:bg-[rgb(230,230,230)] transition-colors whitespace-nowrap"
+        className="w-full px-4 py-2.5 bg-white rounded-full text-[14px] font-light outline-none cursor-pointer flex items-center justify-between gap-2 border border-[rgb(230,230,230)] hover:border-[rgb(199,199,199)] transition-colors"
         style={{ fontFamily: 'Geist, sans-serif' }}
       >
         <span className="truncate">{selectedLabel}</span>
@@ -69,7 +68,7 @@ const CustomDropdown: React.FC<{
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 w-full min-w-[180px] bg-white rounded-2xl shadow-lg border border-[rgb(230,230,230)] overflow-hidden z-50 max-h-[300px] overflow-y-auto">
+        <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-lg border border-[rgb(230,230,230)] overflow-hidden z-50 max-h-[300px] overflow-y-auto">
           {options.map((option) => (
             <button
               key={option.value}
@@ -151,18 +150,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   ];
 
   return (
-    <section className="bg-white border-b border-[rgb(199,199,199)] py-8 md:py-12">
+    <section className="bg-white border-b border-[rgb(199,199,199)] py-6 md:py-10">
       <div className="max-w-[1360px] mx-auto px-4 md:px-8 lg:px-20">
         {/* Header */}
-        <div className="mb-6 md:mb-8">
+        <div className="mb-4 md:mb-6">
           <h1
-            className="text-[24px] sm:text-[28px] md:text-[36px] font-semibold text-[rgb(44,44,44)] uppercase mb-2"
+            className="text-[22px] sm:text-[28px] md:text-[36px] font-semibold text-[rgb(44,44,44)] uppercase mb-1 md:mb-2"
             style={{ fontFamily: 'Geist, sans-serif' }}
           >
             Properties <span className="text-[rgb(102,252,117)]">Listing</span>
           </h1>
           <p
-            className="text-[14px] md:text-[16px] text-[rgb(136,136,136)] font-light max-w-[600px]"
+            className="text-[13px] md:text-[16px] text-[rgb(136,136,136)] font-light max-w-[600px]"
             style={{ fontFamily: 'Geist, sans-serif' }}
           >
             Browse and filter through our exclusive collection of premium real estate
@@ -170,11 +169,217 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         </div>
 
         {/* Unified Search & Filter Bar */}
-        <div className="bg-[rgb(250,250,250)] rounded-3xl p-4 md:p-5">
-          {/* Row 1: Search + View Toggle */}
-          <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3 mb-4">
+        <div className="bg-[rgb(250,250,250)] rounded-2xl md:rounded-3xl p-3 md:p-5">
+          
+          {/* Mobile Layout: Stacked vertically */}
+          <div className="flex flex-col gap-3 md:hidden">
+            {/* Row 1: Search */}
+            <div className="relative">
+              <svg
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[rgb(136,136,136)]"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              <input
+                type="text"
+                placeholder="Search by location..."
+                value={searchQuery}
+                onChange={(e) => onSearchChange(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 bg-white rounded-full text-[14px] font-light outline-none border border-[rgb(230,230,230)] focus:border-[rgb(199,199,199)] transition-colors"
+                style={{ fontFamily: 'Geist, sans-serif' }}
+              />
+            </div>
+
+            {/* Row 2: View Toggle + Results Count */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center bg-white rounded-full p-1 border border-[rgb(230,230,230)]">
+                <button
+                  onClick={() => onViewModeChange('grid')}
+                  className={`p-2 rounded-full transition-colors ${
+                    viewMode === 'grid' ? 'bg-black text-white' : 'text-[rgb(136,136,136)]'
+                  }`}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="3" y="3" width="7" height="7" />
+                    <rect x="14" y="3" width="7" height="7" />
+                    <rect x="14" y="14" width="7" height="7" />
+                    <rect x="3" y="14" width="7" height="7" />
+                  </svg>
+                </button>
+                <button
+                  onClick={() => onViewModeChange('list')}
+                  className={`p-2 rounded-full transition-colors ${
+                    viewMode === 'list' ? 'bg-black text-white' : 'text-[rgb(136,136,136)]'
+                  }`}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <line x1="3" y1="6" x2="21" y2="6" />
+                    <line x1="3" y1="12" x2="21" y2="12" />
+                    <line x1="3" y1="18" x2="21" y2="18" />
+                  </svg>
+                </button>
+              </div>
+              <span
+                className="text-[13px] text-[rgb(136,136,136)] font-light"
+                style={{ fontFamily: 'Geist, sans-serif' }}
+              >
+                {resultsCount} properties
+              </span>
+            </div>
+
+            {/* Row 3: Filters - 2 per row */}
+            <div className="grid grid-cols-2 gap-2">
+              <CustomDropdown
+                value={sortBy}
+                options={sortOptions}
+                onChange={onSortChange}
+              />
+              <CustomDropdown
+                value={propertyType}
+                options={propertyTypes}
+                onChange={onPropertyTypeChange}
+              />
+            </div>
+
+            {/* Row 4: Project + Space */}
+            <div className="grid grid-cols-2 gap-2">
+              <CustomDropdown
+                value={selectedProject}
+                options={projectOptions}
+                onChange={onProjectChange}
+                placeholder="All Projects"
+              />
+              <div className="flex items-center gap-2 bg-white rounded-full px-3 py-2.5 border border-[rgb(230,230,230)]">
+                <input
+                  type="number"
+                  placeholder="Min"
+                  value={minSpace}
+                  onChange={(e) => onMinSpaceChange(e.target.value)}
+                  className="w-full text-[14px] font-light outline-none bg-transparent text-center"
+                  style={{ fontFamily: 'Geist, sans-serif' }}
+                />
+                <span className="text-[rgb(136,136,136)] text-[12px]">-</span>
+                <input
+                  type="number"
+                  placeholder="Max"
+                  value={maxSpace}
+                  onChange={(e) => onMaxSpaceChange(e.target.value)}
+                  className="w-full text-[14px] font-light outline-none bg-transparent text-center"
+                  style={{ fontFamily: 'Geist, sans-serif' }}
+                />
+                <span className="text-[12px] text-[rgb(136,136,136)] font-light">m²</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Tablet Layout: Two rows */}
+          <div className="hidden md:flex lg:hidden flex-col gap-3">
+            {/* Row 1: Search + View Toggle */}
+            <div className="flex items-center gap-3">
+              <div className="relative flex-1">
+                <svg
+                  className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[rgb(136,136,136)]"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+                <input
+                  type="text"
+                  placeholder="Search by location..."
+                  value={searchQuery}
+                  onChange={(e) => onSearchChange(e.target.value)}
+                  className="w-full pl-12 pr-4 py-3 bg-white rounded-full text-[14px] font-light outline-none border border-[rgb(230,230,230)] focus:border-[rgb(199,199,199)] transition-colors"
+                  style={{ fontFamily: 'Geist, sans-serif' }}
+                />
+              </div>
+              <div className="flex items-center bg-white rounded-full p-1 border border-[rgb(230,230,230)]">
+                <button
+                  onClick={() => onViewModeChange('grid')}
+                  className={`p-2.5 rounded-full transition-colors ${
+                    viewMode === 'grid' ? 'bg-black text-white' : 'text-[rgb(136,136,136)]'
+                  }`}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="3" y="3" width="7" height="7" />
+                    <rect x="14" y="3" width="7" height="7" />
+                    <rect x="14" y="14" width="7" height="7" />
+                    <rect x="3" y="14" width="7" height="7" />
+                  </svg>
+                </button>
+                <button
+                  onClick={() => onViewModeChange('list')}
+                  className={`p-2.5 rounded-full transition-colors ${
+                    viewMode === 'list' ? 'bg-black text-white' : 'text-[rgb(136,136,136)]'
+                  }`}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <line x1="3" y1="6" x2="21" y2="6" />
+                    <line x1="3" y1="12" x2="21" y2="12" />
+                    <line x1="3" y1="18" x2="21" y2="18" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* Row 2: All Filters */}
+            <div className="flex items-center gap-3 flex-wrap">
+              <CustomDropdown
+                value={sortBy}
+                options={sortOptions}
+                onChange={onSortChange}
+              />
+              <CustomDropdown
+                value={propertyType}
+                options={propertyTypes}
+                onChange={onPropertyTypeChange}
+              />
+              <CustomDropdown
+                value={selectedProject}
+                options={projectOptions}
+                onChange={onProjectChange}
+                placeholder="All Projects"
+              />
+              <div className="flex items-center gap-2">
+                <input
+                  type="number"
+                  placeholder="Min m²"
+                  value={minSpace}
+                  onChange={(e) => onMinSpaceChange(e.target.value)}
+                  className="w-20 px-3 py-2 bg-white rounded-full text-[14px] font-light outline-none border border-[rgb(230,230,230)]"
+                  style={{ fontFamily: 'Geist, sans-serif' }}
+                />
+                <span className="text-[rgb(136,136,136)]">-</span>
+                <input
+                  type="number"
+                  placeholder="Max m²"
+                  value={maxSpace}
+                  onChange={(e) => onMaxSpaceChange(e.target.value)}
+                  className="w-20 px-3 py-2 bg-white rounded-full text-[14px] font-light outline-none border border-[rgb(230,230,230)]"
+                  style={{ fontFamily: 'Geist, sans-serif' }}
+                />
+              </div>
+              <span
+                className="ml-auto text-[14px] text-[rgb(136,136,136)] font-light"
+                style={{ fontFamily: 'Geist, sans-serif' }}
+              >
+                {resultsCount} properties
+              </span>
+            </div>
+          </div>
+
+          {/* Desktop Layout: Single row */}
+          <div className="hidden lg:flex items-center gap-3">
             {/* Location Search */}
-            <div className="relative flex-1">
+            <div className="relative flex-1 max-w-[300px]">
               <svg
                 className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[rgb(136,136,136)]"
                 viewBox="0 0 24 24"
@@ -190,7 +395,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 placeholder="Search by location..."
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 bg-white rounded-full text-[14px] md:text-[16px] font-light outline-none border border-[rgb(230,230,230)] focus:border-[rgb(199,199,199)] transition-colors"
+                className="w-full pl-12 pr-4 py-3 bg-white rounded-full text-[14px] font-light outline-none border border-[rgb(230,230,230)] focus:border-[rgb(199,199,199)] transition-colors"
                 style={{ fontFamily: 'Geist, sans-serif' }}
               />
             </div>
@@ -223,33 +428,26 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 </svg>
               </button>
             </div>
-          </div>
 
-          {/* Row 2: Filters */}
-          <div className="flex flex-wrap items-center gap-3">
-            {/* Sort Dropdown */}
+            {/* Divider */}
+            <div className="w-px h-8 bg-[rgb(230,230,230)] mx-1" />
+
+            {/* Filters */}
             <CustomDropdown
               value={sortBy}
               options={sortOptions}
               onChange={onSortChange}
-              width="w-[140px]"
             />
-
-            {/* Property Type Dropdown */}
             <CustomDropdown
               value={propertyType}
               options={propertyTypes}
               onChange={onPropertyTypeChange}
-              width="w-[140px]"
             />
-
-            {/* Project Dropdown */}
             <CustomDropdown
               value={selectedProject}
               options={projectOptions}
               onChange={onProjectChange}
               placeholder="All Projects"
-              width="w-[160px]"
             />
 
             {/* Space Range */}
@@ -259,7 +457,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 placeholder="Min m²"
                 value={minSpace}
                 onChange={(e) => onMinSpaceChange(e.target.value)}
-                className="w-24 px-3 py-2 bg-white rounded-full text-[14px] font-light outline-none border border-[rgb(230,230,230)] focus:border-[rgb(199,199,199)] transition-colors"
+                className="w-24 px-3 py-2 bg-white rounded-full text-[14px] font-light outline-none border border-[rgb(230,230,230)]"
                 style={{ fontFamily: 'Geist, sans-serif' }}
               />
               <span className="text-[rgb(136,136,136)]">-</span>
@@ -268,29 +466,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 placeholder="Max m²"
                 value={maxSpace}
                 onChange={(e) => onMaxSpaceChange(e.target.value)}
-                className="w-24 px-3 py-2 bg-white rounded-full text-[14px] font-light outline-none border border-[rgb(230,230,230)] focus:border-[rgb(199,199,199)] transition-colors"
+                className="w-24 px-3 py-2 bg-white rounded-full text-[14px] font-light outline-none border border-[rgb(230,230,230)]"
                 style={{ fontFamily: 'Geist, sans-serif' }}
               />
             </div>
 
-            {/* Results Count - Pushed to right */}
+            {/* Results Count */}
             <span
-              className="ml-auto text-[14px] text-[rgb(136,136,136)] font-light hidden md:block"
+              className="ml-auto text-[14px] text-[rgb(136,136,136)] font-light whitespace-nowrap"
               style={{ fontFamily: 'Geist, sans-serif' }}
             >
               {resultsCount} properties
             </span>
           </div>
-        </div>
-
-        {/* Mobile Results Count */}
-        <div className="md:hidden mt-3 text-center">
-          <span
-            className="text-[14px] text-[rgb(136,136,136)] font-light"
-            style={{ fontFamily: 'Geist, sans-serif' }}
-          >
-            {resultsCount} properties found
-          </span>
         </div>
       </div>
     </section>
