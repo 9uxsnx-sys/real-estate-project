@@ -30,7 +30,8 @@ const CustomDropdown: React.FC<{
   options: DropdownOption[];
   onChange: (value: string) => void;
   placeholder?: string;
-}> = ({ value, options, onChange, placeholder = 'Select...' }) => {
+  width?: string;
+}> = ({ value, options, onChange, placeholder = 'Select...', width = 'w-auto' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -47,10 +48,10 @@ const CustomDropdown: React.FC<{
   }, []);
 
   return (
-    <div ref={dropdownRef} className="relative flex-1 min-w-[120px] max-w-[200px]">
+    <div ref={dropdownRef} className={`relative ${width}`}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-4 py-2.5 bg-white rounded-full text-[14px] font-light outline-none cursor-pointer flex items-center justify-between gap-2 border border-[rgb(230,230,230)] hover:border-[rgb(199,199,199)] transition-colors"
+        className="w-full px-4 py-2.5 bg-[rgb(243,243,243)] rounded-full text-[14px] font-light outline-none cursor-pointer flex items-center justify-between gap-2 hover:bg-[rgb(230,230,230)] transition-colors whitespace-nowrap"
         style={{ fontFamily: 'Geist, sans-serif' }}
       >
         <span className="truncate">{selectedLabel}</span>
@@ -68,7 +69,7 @@ const CustomDropdown: React.FC<{
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-lg border border-[rgb(230,230,230)] overflow-hidden z-50 max-h-[300px] overflow-y-auto">
+        <div className="absolute top-full left-0 mt-2 w-full min-w-[180px] bg-white rounded-2xl shadow-lg border border-[rgb(230,230,230)] overflow-hidden z-50 max-h-[300px] overflow-y-auto">
           {options.map((option) => (
             <button
               key={option.value}
@@ -171,7 +172,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         {/* Unified Search & Filter Bar */}
         <div className="bg-[rgb(250,250,250)] rounded-2xl md:rounded-3xl p-3 md:p-5">
           
-          {/* Mobile Layout: Stacked vertically */}
+          {/* Mobile Layout */}
           <div className="flex flex-col gap-3 md:hidden">
             {/* Row 1: Search */}
             <div className="relative">
@@ -232,17 +233,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </span>
             </div>
 
-            {/* Row 3: Filters - 2 per row */}
+            {/* Row 3: Sort + Type */}
             <div className="grid grid-cols-2 gap-2">
               <CustomDropdown
                 value={sortBy}
                 options={sortOptions}
                 onChange={onSortChange}
+                width="w-full"
               />
               <CustomDropdown
                 value={propertyType}
                 options={propertyTypes}
                 onChange={onPropertyTypeChange}
+                width="w-full"
               />
             </div>
 
@@ -253,6 +256,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 options={projectOptions}
                 onChange={onProjectChange}
                 placeholder="All Projects"
+                width="w-full"
               />
               <div className="flex items-center gap-2 bg-white rounded-full px-3 py-2.5 border border-[rgb(230,230,230)]">
                 <input
@@ -277,9 +281,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
           </div>
 
-          {/* Tablet Layout: Two rows */}
+          {/* Tablet Layout: 3 Rows */}
           <div className="hidden md:flex lg:hidden flex-col gap-3">
-            {/* Row 1: Search + View Toggle */}
+            {/* Row 1: Search Bar + View Toggle */}
             <div className="flex items-center gap-3">
               <div className="relative flex-1">
                 <svg
@@ -297,18 +301,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   placeholder="Search by location..."
                   value={searchQuery}
                   onChange={(e) => onSearchChange(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 bg-white rounded-full text-[14px] font-light outline-none border border-[rgb(230,230,230)] focus:border-[rgb(199,199,199)] transition-colors"
+                  className="w-full pl-12 pr-4 py-3 bg-white rounded-full text-[15px] font-light outline-none border border-[rgb(230,230,230)] focus:border-[rgb(199,199,199)] transition-colors"
                   style={{ fontFamily: 'Geist, sans-serif' }}
                 />
               </div>
-              <div className="flex items-center bg-white rounded-full p-1 border border-[rgb(230,230,230)]">
+              <div className="flex items-center bg-white rounded-full p-1.5 border border-[rgb(230,230,230)]">
                 <button
                   onClick={() => onViewModeChange('grid')}
                   className={`p-2.5 rounded-full transition-colors ${
                     viewMode === 'grid' ? 'bg-black text-white' : 'text-[rgb(136,136,136)]'
                   }`}
                 >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <rect x="3" y="3" width="7" height="7" />
                     <rect x="14" y="3" width="7" height="7" />
                     <rect x="14" y="14" width="7" height="7" />
@@ -321,7 +325,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     viewMode === 'list' ? 'bg-black text-white' : 'text-[rgb(136,136,136)]'
                   }`}
                 >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <line x1="3" y1="6" x2="21" y2="6" />
                     <line x1="3" y1="12" x2="21" y2="12" />
                     <line x1="3" y1="18" x2="21" y2="18" />
@@ -330,53 +334,60 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </div>
             </div>
 
-            {/* Row 2: All Filters */}
-            <div className="flex items-center gap-3 flex-wrap">
+            {/* Row 2: Sort + Property Type + Project (3 equal columns) */}
+            <div className="grid grid-cols-3 gap-3">
               <CustomDropdown
                 value={sortBy}
                 options={sortOptions}
                 onChange={onSortChange}
+                width="w-full"
               />
               <CustomDropdown
                 value={propertyType}
                 options={propertyTypes}
                 onChange={onPropertyTypeChange}
+                width="w-full"
               />
               <CustomDropdown
                 value={selectedProject}
                 options={projectOptions}
                 onChange={onProjectChange}
                 placeholder="All Projects"
+                width="w-full"
               />
-              <div className="flex items-center gap-2">
+            </div>
+
+            {/* Row 3: Space Range + Results Count */}
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
                 <input
                   type="number"
                   placeholder="Min m²"
                   value={minSpace}
                   onChange={(e) => onMinSpaceChange(e.target.value)}
-                  className="w-20 px-3 py-2 bg-white rounded-full text-[14px] font-light outline-none border border-[rgb(230,230,230)]"
+                  className="w-28 px-4 py-2.5 bg-[rgb(243,243,243)] rounded-full text-[14px] font-light outline-none border border-transparent hover:border-[rgb(199,199,199)] transition-colors"
                   style={{ fontFamily: 'Geist, sans-serif' }}
                 />
-                <span className="text-[rgb(136,136,136)]">-</span>
+                <span className="text-[rgb(136,136,136)] font-light">-</span>
                 <input
                   type="number"
                   placeholder="Max m²"
                   value={maxSpace}
                   onChange={(e) => onMaxSpaceChange(e.target.value)}
-                  className="w-20 px-3 py-2 bg-white rounded-full text-[14px] font-light outline-none border border-[rgb(230,230,230)]"
+                  className="w-28 px-4 py-2.5 bg-[rgb(243,243,243)] rounded-full text-[14px] font-light outline-none border border-transparent hover:border-[rgb(199,199,199)] transition-colors"
                   style={{ fontFamily: 'Geist, sans-serif' }}
                 />
               </div>
               <span
-                className="ml-auto text-[14px] text-[rgb(136,136,136)] font-light"
+                className="text-[15px] text-[rgb(136,136,136)] font-light whitespace-nowrap"
                 style={{ fontFamily: 'Geist, sans-serif' }}
               >
-                {resultsCount} properties
+                {resultsCount} properties found
               </span>
             </div>
           </div>
 
-          {/* Desktop Layout: Single row */}
+          {/* Desktop Layout: Single Row */}
           <div className="hidden lg:flex items-center gap-3">
             {/* Location Search */}
             <div className="relative flex-1 max-w-[300px]">
@@ -395,7 +406,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 placeholder="Search by location..."
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 bg-white rounded-full text-[14px] font-light outline-none border border-[rgb(230,230,230)] focus:border-[rgb(199,199,199)] transition-colors"
+                className="w-full pl-12 pr-4 py-3 bg-[rgb(243,243,243)] rounded-full text-[14px] font-light outline-none hover:bg-[rgb(230,230,230)] transition-colors"
                 style={{ fontFamily: 'Geist, sans-serif' }}
               />
             </div>
@@ -429,25 +440,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </button>
             </div>
 
-            {/* Divider */}
-            <div className="w-px h-8 bg-[rgb(230,230,230)] mx-1" />
-
             {/* Filters */}
             <CustomDropdown
               value={sortBy}
               options={sortOptions}
               onChange={onSortChange}
+              width="w-[140px]"
             />
             <CustomDropdown
               value={propertyType}
               options={propertyTypes}
               onChange={onPropertyTypeChange}
+              width="w-[140px]"
             />
             <CustomDropdown
               value={selectedProject}
               options={projectOptions}
               onChange={onProjectChange}
               placeholder="All Projects"
+              width="w-[160px]"
             />
 
             {/* Space Range */}
@@ -457,7 +468,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 placeholder="Min m²"
                 value={minSpace}
                 onChange={(e) => onMinSpaceChange(e.target.value)}
-                className="w-24 px-3 py-2 bg-white rounded-full text-[14px] font-light outline-none border border-[rgb(230,230,230)]"
+                className="w-24 px-3 py-2 bg-[rgb(243,243,243)] rounded-full text-[14px] font-light outline-none hover:bg-[rgb(230,230,230)] transition-colors"
                 style={{ fontFamily: 'Geist, sans-serif' }}
               />
               <span className="text-[rgb(136,136,136)]">-</span>
@@ -466,7 +477,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 placeholder="Max m²"
                 value={maxSpace}
                 onChange={(e) => onMaxSpaceChange(e.target.value)}
-                className="w-24 px-3 py-2 bg-white rounded-full text-[14px] font-light outline-none border border-[rgb(230,230,230)]"
+                className="w-24 px-3 py-2 bg-[rgb(243,243,243)] rounded-full text-[14px] font-light outline-none hover:bg-[rgb(230,230,230)] transition-colors"
                 style={{ fontFamily: 'Geist, sans-serif' }}
               />
             </div>
