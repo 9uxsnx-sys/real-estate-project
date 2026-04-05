@@ -1,18 +1,4 @@
-export interface Property {
-  id: string;
-  name: string;
-  projectName: string;
-  location: string;
-  price: number;
-  category: 'For Sale' | 'For Rent' | 'For Investment' | 'Luxury';
-  propertyType: 'studio' | 'f1' | 'f2' | 'f3' | 'f4' | 'f5+' | 'garage';
-  spaceSqm: number;
-  beds: number;
-  baths: number;
-  sqft: number;
-  image: string;
-  featured?: boolean;
-}
+import { Property } from '../types';
 
 export const properties: Property[] = [
   {

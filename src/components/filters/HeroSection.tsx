@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { properties } from '../data/properties';
+import { properties } from '../../data/properties';
 
 interface HeroSectionProps {
   searchQuery: string;

@@ -1,6 +1,6 @@
 import React from 'react';
-import { PropertyCard } from '../components/PropertyCard';
-import { HeroSection } from '../components/HeroSection';
+import { PropertyCard } from '../components/property';
+import { HeroSection } from '../components/filters';
 import { properties } from '../data/properties';
 
 interface PropertiesListingProps {

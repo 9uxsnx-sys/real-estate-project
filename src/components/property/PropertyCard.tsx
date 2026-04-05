@@ -1,5 +1,6 @@
 import React from 'react';
-import { Property, formatPrice, getPropertyTypeLabel } from '../data/properties';
+import { Property } from '../../types';
+import { formatPrice, getPropertyTypeLabel } from '../../utils';
 
 interface PropertyCardProps {
   property: Property;
