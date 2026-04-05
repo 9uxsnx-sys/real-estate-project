@@ -20,7 +20,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onClick, v
       <div
         onClick={handleClick}
         className="group cursor-pointer bg-white rounded-4xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg h-full flex flex-col"
-        style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
+        style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
       >
         {/* Image Container - NO TAGS */}
         <div className="relative aspect-[4/3] overflow-hidden rounded-t-4xl flex-shrink-0">
@@ -117,7 +117,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onClick, v
     <div
       onClick={handleClick}
       className="group cursor-pointer bg-white rounded-3xl overflow-hidden transition-all duration-300 hover:shadow-lg flex flex-row h-[160px] sm:h-[150px] md:h-[170px]"
-      style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
+      style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
     >
       {/* Image - 40% on mobile, 35% on larger */}
       <div className="relative w-[40%] sm:w-[35%] h-full overflow-hidden flex-shrink-0">
