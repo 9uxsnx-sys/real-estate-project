@@ -1,9 +1,12 @@
 export interface Property {
   id: string;
   name: string;
+  projectName: string;
   location: string;
   price: number;
   category: 'For Sale' | 'For Rent' | 'For Investment' | 'Luxury';
+  propertyType: 'studio' | 'f1' | 'f2' | 'f3' | 'f4' | 'f5+' | 'garage';
+  spaceSqm: number;
   beds: number;
   baths: number;
   sqft: number;
@@ -15,9 +18,12 @@ export const properties: Property[] = [
   {
     id: '1',
     name: 'The One',
+    projectName: 'Bel Air Heights',
     location: 'Bel Air, LA',
     price: 690000,
     category: 'For Investment',
+    propertyType: 'f5+',
+    spaceSqm: 258,
     beds: 6,
     baths: 4,
     sqft: 2780,
@@ -27,9 +33,12 @@ export const properties: Property[] = [
   {
     id: '2',
     name: 'Ocean View Villa',
+    projectName: 'Malibu Shores',
     location: 'Malibu, CA',
     price: 4250000,
     category: 'Luxury',
+    propertyType: 'f5+',
+    spaceSqm: 418,
     beds: 5,
     baths: 6,
     sqft: 4500,
@@ -39,9 +48,12 @@ export const properties: Property[] = [
   {
     id: '3',
     name: 'Modern Hills Estate',
+    projectName: 'Beverly Hills Residences',
     location: 'Beverly Hills, CA',
     price: 3200000,
     category: 'For Sale',
+    propertyType: 'f4',
+    spaceSqm: 353,
     beds: 4,
     baths: 5,
     sqft: 3800,
@@ -50,9 +62,12 @@ export const properties: Property[] = [
   {
     id: '4',
     name: 'Sunset Boulevard Penthouse',
+    projectName: 'Hollywood Towers',
     location: 'Hollywood Hills, CA',
     price: 1850000,
     category: 'For Sale',
+    propertyType: 'f3',
+    spaceSqm: 195,
     beds: 3,
     baths: 3,
     sqft: 2100,
@@ -61,9 +76,12 @@ export const properties: Property[] = [
   {
     id: '5',
     name: 'Coastal Investment Property',
+    projectName: 'Santa Monica Bay',
     location: 'Santa Monica, CA',
     price: 850000,
     category: 'For Investment',
+    propertyType: 'f3',
+    spaceSqm: 153,
     beds: 3,
     baths: 2,
     sqft: 1650,
@@ -72,9 +90,12 @@ export const properties: Property[] = [
   {
     id: '6',
     name: 'Downtown Luxury Loft',
+    projectName: 'LA Central Lofts',
     location: 'Downtown LA, CA',
     price: 1200000,
     category: 'Luxury',
+    propertyType: 'f2',
+    spaceSqm: 172,
     beds: 2,
     baths: 2,
     sqft: 1850,
@@ -83,9 +104,12 @@ export const properties: Property[] = [
   {
     id: '7',
     name: 'Family Home with Pool',
+    projectName: 'Pasadena Gardens',
     location: 'Pasadena, CA',
     price: 950000,
     category: 'For Sale',
+    propertyType: 'f4',
+    spaceSqm: 223,
     beds: 4,
     baths: 3,
     sqft: 2400,
@@ -94,9 +118,12 @@ export const properties: Property[] = [
   {
     id: '8',
     name: 'Investment Opportunity',
+    projectName: 'Venice Beach Living',
     location: 'Venice Beach, CA',
     price: 720000,
     category: 'For Investment',
+    propertyType: 'f2',
+    spaceSqm: 130,
     beds: 2,
     baths: 2,
     sqft: 1400,
@@ -105,9 +132,12 @@ export const properties: Property[] = [
   {
     id: '9',
     name: 'Garden Estate',
+    projectName: 'Brentwood Estates',
     location: 'Brentwood, CA',
     price: 2800000,
     category: 'Luxury',
+    propertyType: 'f5+',
+    spaceSqm: 334,
     beds: 5,
     baths: 4,
     sqft: 3600,
@@ -116,9 +146,12 @@ export const properties: Property[] = [
   {
     id: '10',
     name: 'Charming Craftsman',
+    projectName: 'Silver Lake Village',
     location: 'Silver Lake, CA',
     price: 580000,
     category: 'For Rent',
+    propertyType: 'f1',
+    spaceSqm: 102,
     beds: 2,
     baths: 1,
     sqft: 1100,
@@ -127,9 +160,12 @@ export const properties: Property[] = [
   {
     id: '11',
     name: 'Hillside Contemporary',
+    projectName: 'Hollywood Heights',
     location: 'Hollywood Hills, CA',
     price: 2100000,
     category: 'For Sale',
+    propertyType: 'f4',
+    spaceSqm: 297,
     beds: 4,
     baths: 4,
     sqft: 3200,
@@ -138,13 +174,58 @@ export const properties: Property[] = [
   {
     id: '12',
     name: 'Beachfront Condo',
+    projectName: 'Malibu Beachfront',
     location: 'Malibu, CA',
     price: 1450000,
     category: 'For Sale',
+    propertyType: 'f2',
+    spaceSqm: 149,
     beds: 2,
     baths: 2,
     sqft: 1600,
     image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800',
+  },
+  {
+    id: '13',
+    name: 'Downtown Studio',
+    projectName: 'LA Central Lofts',
+    location: 'Downtown LA, CA',
+    price: 450000,
+    category: 'For Sale',
+    propertyType: 'studio',
+    spaceSqm: 45,
+    beds: 1,
+    baths: 1,
+    sqft: 484,
+    image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800',
+  },
+  {
+    id: '14',
+    name: 'Garage Unit',
+    projectName: 'Beverly Hills Residences',
+    location: 'Beverly Hills, CA',
+    price: 150000,
+    category: 'For Investment',
+    propertyType: 'garage',
+    spaceSqm: 25,
+    beds: 0,
+    baths: 0,
+    sqft: 269,
+    image: 'https://images.unsplash.com/photo-1582268611958-ebfd161ef0e8?w=800',
+  },
+  {
+    id: '15',
+    name: 'Modern F1 Apartment',
+    projectName: 'Santa Monica Bay',
+    location: 'Santa Monica, CA',
+    price: 620000,
+    category: 'For Rent',
+    propertyType: 'f1',
+    spaceSqm: 65,
+    beds: 1,
+    baths: 1,
+    sqft: 700,
+    image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800',
   },
 ];
 
@@ -154,4 +235,17 @@ export const formatPrice = (price: number): string => {
     currency: 'USD',
     maximumFractionDigits: 0,
   }).format(price);
+};
+
+export const getPropertyTypeLabel = (type: Property['propertyType']): string => {
+  const labels: Record<string, string> = {
+    studio: 'Studio',
+    f1: 'F1',
+    f2: 'F2',
+    f3: 'F3',
+    f4: 'F4',
+    'f5+': 'F5+',
+    garage: 'Garage',
+  };
+  return labels[type] || type;
 };

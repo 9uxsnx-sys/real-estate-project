@@ -1,95 +1,71 @@
 import React from 'react';
-import { SearchBar } from './SearchBar';
 
 interface HeroSectionProps {
   onSearch?: (query: string) => void;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onSearch }) => {
+  const [query, setQuery] = React.useState('');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (onSearch) {
+      onSearch(query);
+    }
+  };
+
   return (
-    <section className="relative min-h-[60vh] flex items-center justify-center bg-[rgb(44,44,44)]">
-      {/* Background Image with Overlay */}
-      <div className="absolute inset-0">
-        <img
-          src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600"
-          alt="Luxury home"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black/40" />
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 w-full max-w-[1200px] mx-auto px-4 md:px-8 lg:px-20 text-center py-20">
-        {/* Headline */}
-        <h1
-          className="text-[32px] sm:text-[40px] md:text-[48px] lg:text-[56px] font-semibold text-white uppercase mb-4"
-          style={{ fontFamily: 'Geist, sans-serif' }}
-        >
-          Discover Your
-          <br />
-          <span className="text-[rgb(102,252,117)]">Perfect Home</span>
-        </h1>
-
-        {/* Subtitle */}
-        <p
-          className="text-[16px] sm:text-[18px] text-white/80 font-light mb-8 max-w-[600px] mx-auto"
-          style={{ fontFamily: 'Geist, sans-serif' }}
-        >
-          Explore our curated collection of luxury properties in Los Angeles most prestigious neighborhoods
-        </p>
-
-        {/* Search Bar */}
-        <div className="mb-12">
-          <SearchBar onSearch={onSearch} />
+    <section className="bg-white border-b border-[rgb(199,199,199)] py-12">
+      <div className="max-w-[1360px] mx-auto px-4 md:px-8 lg:px-20">
+        {/* Header */}
+        <div className="mb-8">
+          <h1
+            className="text-[28px] sm:text-[32px] md:text-[40px] font-semibold text-[rgb(44,44,44)] uppercase mb-2"
+            style={{ fontFamily: 'Geist, sans-serif' }}
+          >
+            Properties <span className="text-[rgb(102,252,117)]">Listing</span>
+          </h1>
+          <p
+            className="text-[16px] text-[rgb(136,136,136)] font-light max-w-[600px]"
+            style={{ fontFamily: 'Geist, sans-serif' }}
+          >
+            Browse and filter through our exclusive collection of premium real estate properties
+          </p>
         </div>
 
-        {/* Stats */}
-        <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16">
-          <div className="text-center">
-            <p
-              className="text-[28px] sm:text-[32px] font-semibold text-white"
+        {/* Location Search Bar */}
+        <form onSubmit={handleSubmit} className="max-w-[600px]">
+          <div className="flex items-center gap-3 p-2 bg-[rgb(243,243,243)] rounded-full">
+            <div className="flex-1 flex items-center gap-3 px-4">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="rgb(136,136,136)"
+                strokeWidth="2"
+              >
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              <input
+                type="text"
+                placeholder="Search by location..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className="w-full py-3 text-[16px] text-[rgb(44,44,44)] placeholder:text-[rgb(136,136,136)] outline-none bg-transparent"
+                style={{ fontFamily: 'Geist, sans-serif' }}
+              />
+            </div>
+            <button
+              type="submit"
+              className="px-6 py-3 bg-black text-white rounded-full font-light text-[16px] transition-colors hover:bg-[rgb(44,44,44)]"
               style={{ fontFamily: 'Geist, sans-serif' }}
             >
-              500+
-            </p>
-            <p
-              className="text-[14px] text-white/60 font-light"
-              style={{ fontFamily: 'Geist, sans-serif' }}
-            >
-              Properties
-            </p>
+              Search
+            </button>
           </div>
-          <div className="w-px h-12 bg-white/20 hidden md:block" />
-          <div className="text-center">
-            <p
-              className="text-[28px] sm:text-[32px] font-semibold text-white"
-              style={{ fontFamily: 'Geist, sans-serif' }}
-            >
-              50+
-            </p>
-            <p
-              className="text-[14px] text-white/60 font-light"
-              style={{ fontFamily: 'Geist, sans-serif' }}
-            >
-              Locations
-            </p>
-          </div>
-          <div className="w-px h-12 bg-white/20 hidden md:block" />
-          <div className="text-center">
-            <p
-              className="text-[28px] sm:text-[32px] font-semibold text-white"
-              style={{ fontFamily: 'Geist, sans-serif' }}
-            >
-              10k+
-            </p>
-            <p
-              className="text-[14px] text-white/60 font-light"
-              style={{ fontFamily: 'Geist, sans-serif' }}
-            >
-              Happy Clients
-            </p>
-          </div>
-        </div>
+        </form>
       </div>
     </section>
   );

@@ -4,15 +4,22 @@ import { HeroSection } from '../components/HeroSection';
 import { FilterBar } from '../components/FilterBar';
 import { properties, Property } from '../data/properties';
 
-interface HomeProps {
+interface PropertiesListingProps {
   onPropertyClick?: (id: string) => void;
 }
 
-export const Home: React.FC<HomeProps> = ({ onPropertyClick }) => {
+export const PropertiesListing: React.FC<PropertiesListingProps> = ({ onPropertyClick }) => {
   const [activeFilter, setActiveFilter] = React.useState('all');
   const [sortBy, setSortBy] = React.useState('featured');
   const [viewMode, setViewMode] = React.useState<'grid' | 'list'>('grid');
   const [searchQuery, setSearchQuery] = React.useState('');
+  
+  // New filter states
+  const [projectSearch, setProjectSearch] = React.useState('');
+  const [propertyTypeFilter, setPropertyTypeFilter] = React.useState('');
+  const [minSpace, setMinSpace] = React.useState('');
+  const [maxSpace, setMaxSpace] = React.useState('');
+  
   const [visibleCount, setVisibleCount] = React.useState(6);
 
   // Filter and sort properties
@@ -24,7 +31,7 @@ export const Home: React.FC<HomeProps> = ({ onPropertyClick }) => {
       result = result.filter((p) => p.category === activeFilter);
     }
 
-    // Filter by search query
+    // Filter by location search query
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       result = result.filter(
@@ -32,6 +39,33 @@ export const Home: React.FC<HomeProps> = ({ onPropertyClick }) => {
           p.name.toLowerCase().includes(query) ||
           p.location.toLowerCase().includes(query)
       );
+    }
+
+    // Filter by project name
+    if (projectSearch) {
+      const query = projectSearch.toLowerCase();
+      result = result.filter((p) =>
+        p.projectName.toLowerCase().includes(query)
+      );
+    }
+
+    // Filter by property type
+    if (propertyTypeFilter) {
+      result = result.filter((p) => p.propertyType === propertyTypeFilter);
+    }
+
+    // Filter by space range (m²)
+    if (minSpace) {
+      const min = parseInt(minSpace);
+      if (!isNaN(min)) {
+        result = result.filter((p) => p.spaceSqm >= min);
+      }
+    }
+    if (maxSpace) {
+      const max = parseInt(maxSpace);
+      if (!isNaN(max)) {
+        result = result.filter((p) => p.spaceSqm <= max);
+      }
     }
 
     // Sort
@@ -52,7 +86,7 @@ export const Home: React.FC<HomeProps> = ({ onPropertyClick }) => {
     }
 
     return result;
-  }, [activeFilter, sortBy, searchQuery]);
+  }, [activeFilter, sortBy, searchQuery, projectSearch, propertyTypeFilter, minSpace, maxSpace]);
 
   const visibleProperties = filteredProperties.slice(0, visibleCount);
   const hasMore = visibleCount < filteredProperties.length;
@@ -81,9 +115,17 @@ export const Home: React.FC<HomeProps> = ({ onPropertyClick }) => {
         onSortChange={setSortBy}
         viewMode={viewMode}
         onViewModeChange={setViewMode}
+        projectSearch={projectSearch}
+        onProjectSearchChange={setProjectSearch}
+        propertyType={propertyTypeFilter}
+        onPropertyTypeChange={setPropertyTypeFilter}
+        minSpace={minSpace}
+        onMinSpaceChange={setMinSpace}
+        maxSpace={maxSpace}
+        onMaxSpaceChange={setMaxSpace}
       />
 
-      {/* Properties Grid */}
+      {/* Properties Grid/List */}
       <section className="py-12 md:py-16">
         <div className="max-w-[1360px] mx-auto px-4 md:px-8 lg:px-20">
           {/* Section Title */}
@@ -92,17 +134,17 @@ export const Home: React.FC<HomeProps> = ({ onPropertyClick }) => {
               className="text-[24px] sm:text-[32px] font-semibold uppercase text-[rgb(44,44,44)] mb-2"
               style={{ fontFamily: 'Geist, sans-serif' }}
             >
-              Featured Properties
+              Available Properties
             </h2>
             <p
               className="text-[16px] text-[rgb(136,136,136)] font-light"
               style={{ fontFamily: 'Geist, sans-serif' }}
             >
-              Hand-picked luxury homes in the most sought-after locations
+              Browse our collection of premium real estate
             </p>
           </div>
 
-          {/* Grid */}
+          {/* Grid/List */}
           <div
             className={`grid gap-6 ${
               viewMode === 'grid'
@@ -115,6 +157,7 @@ export const Home: React.FC<HomeProps> = ({ onPropertyClick }) => {
                 key={property.id}
                 property={property}
                 onClick={handlePropertyClick}
+                viewMode={viewMode}
               />
             ))}
           </div>

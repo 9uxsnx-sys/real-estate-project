@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import { Home } from './pages/Home';
+import { PropertiesListing } from './pages/PropertiesListing';
 
 // Navigation Component
 const Navigation: React.FC = () => {
@@ -129,7 +129,7 @@ export default function App() {
           element={
             <>
               <Navigation />
-              <Home onPropertyClick={handlePropertyClick} />
+              <PropertiesListing onPropertyClick={handlePropertyClick} />
             </>
           }
         />
