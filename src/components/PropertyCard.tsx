@@ -112,27 +112,27 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onClick, v
     );
   }
 
-  // List View (Horizontal Card - مستطيل)
+  // List View (Responsive: Vertical on Mobile, Horizontal on Desktop)
   return (
     <div
       onClick={handleClick}
-      className="group cursor-pointer bg-white rounded-4xl overflow-hidden transition-all duration-300 hover:shadow-lg flex flex-row"
+      className="group cursor-pointer bg-white rounded-4xl overflow-hidden transition-all duration-300 hover:shadow-lg flex flex-col md:flex-row"
       style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}
     >
-      {/* Image Container - Left Side (40%) - NO TAGS */}
-      <div className="relative w-[40%] min-h-[200px] overflow-hidden">
+      {/* Image Container - Mobile: Full width top, Desktop: Left side 35% */}
+      <div className="relative w-full md:w-[35%] h-[180px] md:h-auto md:min-h-[200px] overflow-hidden">
         <img
           src={property.image}
           alt={property.name}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-l-4xl"
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-t-4xl md:rounded-l-4xl md:rounded-tr-none"
         />
       </div>
 
-      {/* Content - Right Side (60%) */}
-      <div className="p-5 flex-1 flex flex-col justify-center">
+      {/* Content - Mobile: Full width bottom, Desktop: Right side 65% */}
+      <div className="p-4 md:p-5 flex-1 flex flex-col justify-center">
         {/* Property Name */}
         <h3
-          className="font-semibold text-[22px] text-[rgb(44,44,44)] mb-2"
+          className="font-semibold text-[18px] md:text-[22px] text-[rgb(44,44,44)] mb-1 md:mb-2"
           style={{ fontFamily: 'Geist, sans-serif' }}
         >
           {property.name}
@@ -140,14 +140,14 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onClick, v
 
         {/* Project Name */}
         <p
-          className="text-[15px] text-[rgb(136,136,136)] font-light mb-2"
+          className="text-[13px] md:text-[15px] text-[rgb(136,136,136)] font-light mb-1 md:mb-2"
           style={{ fontFamily: 'Geist, sans-serif' }}
         >
           {property.projectName}
         </p>
 
-        {/* Location */}
-        <div className="flex items-center gap-1 mb-3">
+        {/* Location - Hidden on mobile to save space */}
+        <div className="hidden md:flex items-center gap-1 mb-3">
           <svg
             width="18"
             height="18"
@@ -168,29 +168,31 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onClick, v
           </span>
         </div>
 
-        {/* Specs Row */}
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[rgb(136,136,136)] text-[14px] mb-4">
+        {/* Specs Row - Mobile: Compact, Desktop: Full */}
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 md:gap-x-4 md:gap-y-2 text-[rgb(136,136,136)] text-[13px] md:text-[14px] mb-3 md:mb-4">
           <span className="font-light" style={{ fontFamily: 'Geist, sans-serif' }}>
-            Type: <span className="text-[rgb(44,44,44)]">{getPropertyTypeLabel(property.propertyType)}</span>
+            <span className="md:hidden">{getPropertyTypeLabel(property.propertyType)}</span>
+            <span className="hidden md:inline">Type: <span className="text-[rgb(44,44,44)]">{getPropertyTypeLabel(property.propertyType)}</span></span>
           </span>
           <span className="text-[rgb(199,199,199)]">•</span>
           <span className="font-light" style={{ fontFamily: 'Geist, sans-serif' }}>
-            Space: <span className="text-[rgb(44,44,44)]">{property.spaceSqm} m²</span>
+            <span className="md:hidden">{property.spaceSqm}m²</span>
+            <span className="hidden md:inline">Space: <span className="text-[rgb(44,44,44)]">{property.spaceSqm} m²</span></span>
           </span>
           <span className="text-[rgb(199,199,199)]">•</span>
           <span className="font-light" style={{ fontFamily: 'Geist, sans-serif' }}>
-            Beds: <span className="text-[rgb(44,44,44)]">{property.beds}</span>
+            {property.beds} Beds
           </span>
-          <span className="text-[rgb(199,199,199)]">•</span>
-          <span className="font-light" style={{ fontFamily: 'Geist, sans-serif' }}>
-            Baths: <span className="text-[rgb(44,44,44)]">{property.baths}</span>
+          <span className="text-[rgb(199,199,199)] hidden md:inline">•</span>
+          <span className="font-light hidden md:inline" style={{ fontFamily: 'Geist, sans-serif' }}>
+            {property.baths} Baths
           </span>
         </div>
 
         {/* Price and Button Row */}
-        <div className="flex items-center justify-between mt-auto">
+        <div className="flex items-center justify-between mt-auto pt-2 md:pt-0 border-t md:border-t-0 border-[rgb(243,243,243)]">
           <span
-            className="font-semibold text-[22px] text-[rgb(44,44,44)]"
+            className="font-semibold text-[18px] md:text-[22px] text-[rgb(44,44,44)]"
             style={{ fontFamily: 'Geist, sans-serif' }}
           >
             {formatPrice(property.price)}
@@ -198,10 +200,10 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onClick, v
           
           {/* View Details Button */}
           <span
-            className="text-[14px] font-light text-[rgb(136,136,136)] group-hover:text-[rgb(44,44,44)] transition-colors"
+            className="text-[13px] md:text-[14px] font-light text-[rgb(136,136,136)] group-hover:text-[rgb(44,44,44)] transition-colors"
             style={{ fontFamily: 'Geist, sans-serif' }}
           >
-            View Details →
+            View →
           </span>
         </div>
       </div>

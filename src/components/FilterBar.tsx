@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 interface FilterBarProps {
   activeFilter: string;
@@ -8,7 +8,6 @@ interface FilterBarProps {
   onSortChange: (sort: string) => void;
   viewMode: 'grid' | 'list';
   onViewModeChange: (mode: 'grid' | 'list') => void;
-  // New filter props
   projectSearch: string;
   onProjectSearchChange: (value: string) => void;
   propertyType: string;
@@ -19,6 +18,93 @@ interface FilterBarProps {
   onMaxSpaceChange: (value: string) => void;
 }
 
+// Custom Dropdown Component
+interface DropdownOption {
+  value: string;
+  label: string;
+}
+
+const CustomDropdown: React.FC<{
+  value: string;
+  options: DropdownOption[];
+  onChange: (value: string) => void;
+  placeholder?: string;
+}> = ({ value, options, onChange, placeholder = 'Select...' }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const selectedLabel = options.find((opt) => opt.value === value)?.label || placeholder;
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  return (
+    <div ref={dropdownRef} className="relative">
+      {/* Dropdown Button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full lg:w-auto px-4 py-2 bg-[rgb(243,243,243)] rounded-full text-[14px] font-light outline-none cursor-pointer flex items-center justify-between gap-2 hover:bg-[rgb(230,230,230)] transition-colors"
+        style={{ fontFamily: 'Geist, sans-serif' }}
+      >
+        <span>{selectedLabel}</span>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          className={`transition-transform ${isOpen ? 'rotate-180' : ''}`}
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
+
+      {/* Dropdown Menu */}
+      {isOpen && (
+        <div className="absolute top-full left-0 mt-2 w-full min-w-[180px] bg-white rounded-2xl shadow-lg border border-[rgb(230,230,230)] overflow-hidden z-50">
+          {options.map((option) => (
+            <button
+              key={option.value}
+              onClick={() => {
+                onChange(option.value);
+                setIsOpen(false);
+              }}
+              className={`w-full px-4 py-3 text-left text-[14px] font-light transition-colors flex items-center justify-between ${
+                value === option.value
+                  ? 'bg-[rgb(243,243,243)] text-[rgb(44,44,44)]'
+                  : 'text-[rgb(136,136,136)] hover:bg-[rgb(250,250,250)]'
+              }`}
+              style={{ fontFamily: 'Geist, sans-serif' }}
+            >
+              <span>{option.label}</span>
+              {value === option.value && (
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="rgb(102,252,117)"
+                  strokeWidth="2"
+                >
+                  <path d="M20 6L9 17l-5-5" />
+                </svg>
+              )}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 export const FilterBar: React.FC<FilterBarProps> = ({
   activeFilter,
   onFilterChange,
@@ -27,7 +113,6 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   onSortChange,
   viewMode,
   onViewModeChange,
-  // New filters
   projectSearch,
   onProjectSearchChange,
   propertyType,
@@ -45,6 +130,13 @@ export const FilterBar: React.FC<FilterBarProps> = ({
     { id: 'Luxury', label: 'Luxury' },
   ];
 
+  const sortOptions = [
+    { value: 'featured', label: 'Featured' },
+    { value: 'price-low', label: 'Price: Low to High' },
+    { value: 'price-high', label: 'Price: High to Low' },
+    { value: 'newest', label: 'Newest' },
+  ];
+
   const propertyTypes = [
     { value: '', label: 'All Types' },
     { value: 'studio', label: 'Studio' },
@@ -57,7 +149,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   ];
 
   return (
-    <div className="sticky top-20 z-10 bg-white border-b border-[rgb(199,199,199)] py-4">
+    <div className="bg-white border-b border-[rgb(199,199,199)] py-4">
       <div className="max-w-[1360px] mx-auto px-4 md:px-8 lg:px-20">
         {/* Top Row: View Toggle, Results Count, Sort */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-4">
@@ -102,17 +194,11 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           </div>
 
           {/* Right: Sort Dropdown */}
-          <select
+          <CustomDropdown
             value={sortBy}
-            onChange={(e) => onSortChange(e.target.value)}
-            className="px-4 py-2 bg-[rgb(243,243,243)] rounded-full text-[14px] font-light outline-none cursor-pointer"
-            style={{ fontFamily: 'Geist, sans-serif' }}
-          >
-            <option value="featured">Featured</option>
-            <option value="price-low">Price: Low to High</option>
-            <option value="price-high">Price: High to Low</option>
-            <option value="newest">Newest</option>
-          </select>
+            options={sortOptions}
+            onChange={onSortChange}
+          />
         </div>
 
         {/* Search and Filter Row */}
@@ -142,18 +228,11 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           </div>
 
           {/* Property Type Dropdown */}
-          <select
+          <CustomDropdown
             value={propertyType}
-            onChange={(e) => onPropertyTypeChange(e.target.value)}
-            className="w-full lg:w-auto px-4 py-2 bg-[rgb(243,243,243)] rounded-full text-[14px] font-light outline-none cursor-pointer"
-            style={{ fontFamily: 'Geist, sans-serif' }}
-          >
-            {propertyTypes.map((type) => (
-              <option key={type.value} value={type.value}>
-                {type.label}
-              </option>
-            ))}
-          </select>
+            options={propertyTypes}
+            onChange={onPropertyTypeChange}
+          />
 
           {/* Space Range (m²) */}
           <div className="flex items-center gap-2 w-full lg:w-auto">
