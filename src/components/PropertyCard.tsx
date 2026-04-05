@@ -164,35 +164,32 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onClick, v
       </div>
 
       {/* TABLET & DESKTOP LAYOUT */}
-      <div className="hidden sm:flex flex-1 flex-col p-4 md:p-5 min-w-0 justify-between">
+      <div className="hidden sm:flex flex-1 flex-col p-3 md:p-4 min-w-0 justify-between">
         <div className="min-w-0">
-          <h3 className="font-semibold text-[16px] md:text-[20px] text-[rgb(44,44,44)] leading-snug truncate" style={{ fontFamily: 'Geist, sans-serif' }}>
+          <h3 className="font-semibold text-[15px] lg:text-[17px] text-[rgb(44,44,44)] leading-snug truncate" style={{ fontFamily: 'Geist, sans-serif' }}>
             {property.name}
           </h3>
-          <p className="text-[13px] md:text-[14px] text-[rgb(136,136,136)] font-light mt-0.5 truncate" style={{ fontFamily: 'Geist, sans-serif' }}>
+          <p className="text-[12px] lg:text-[13px] text-[rgb(136,136,136)] font-light mt-0.5 truncate" style={{ fontFamily: 'Geist, sans-serif' }}>
             {property.projectName}
           </p>
-          <div className="flex items-center gap-2 md:gap-3 text-[rgb(136,136,136)] text-[13px] md:text-[14px] mt-1.5">
-            <span className="font-light whitespace-nowrap" style={{ fontFamily: 'Geist, sans-serif' }}>
+          <div className="flex items-center gap-2 text-[rgb(136,136,136)] text-[12px] lg:text-[13px] mt-1.5">
+            <span className="font-light whitespace-nowrap bg-[rgb(243,243,243)] px-2 py-0.5 rounded" style={{ fontFamily: 'Geist, sans-serif' }}>
               {getPropertyTypeLabel(property.propertyType)}
             </span>
             <span className="text-[rgb(199,199,199)]">•</span>
             <span className="font-light whitespace-nowrap" style={{ fontFamily: 'Geist, sans-serif' }}>
               {property.spaceSqm}m²
             </span>
-            <span className="text-[rgb(199,199,199)] hidden md:inline">•</span>
-            <span className="font-light hidden md:inline whitespace-nowrap" style={{ fontFamily: 'Geist, sans-serif' }}>
-              {property.beds} Beds
+            <span className="text-[rgb(199,199,199)]">•</span>
+            <span className="font-light whitespace-nowrap" style={{ fontFamily: 'Geist, sans-serif' }}>
+              {property.beds}bd
             </span>
           </div>
         </div>
 
-        <div className="flex items-end justify-between">
-          <span className="font-semibold text-[17px] md:text-[20px] text-[rgb(44,44,44)] truncate" style={{ fontFamily: 'Geist, sans-serif' }}>
+        <div className="flex items-end justify-between mt-1">
+          <span className="font-semibold text-[16px] lg:text-[18px] text-[rgb(44,44,44)] truncate" style={{ fontFamily: 'Geist, sans-serif' }}>
             {formatPrice(property.price)}
-          </span>
-          <span className="text-[13px] md:text-[14px] font-light text-[rgb(136,136,136)] group-hover:text-[rgb(44,44,44)] transition-colors whitespace-nowrap" style={{ fontFamily: 'Geist, sans-serif' }}>
-            View →
           </span>
         </div>
       </div>
