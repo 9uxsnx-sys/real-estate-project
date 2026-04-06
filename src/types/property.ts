@@ -45,4 +45,6 @@ export interface PropertyDetail extends Property {
     lng: number;
     address: string;
   };
+  propertyCode?: string;
+  whatsappNumber?: string;
 }
