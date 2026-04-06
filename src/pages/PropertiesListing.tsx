@@ -1,7 +1,8 @@
 import React from 'react';
-import { PropertyCard } from '../components/property';
+import { PropertyCard } from '@/components/ui/property-card';
 import { HeroSection } from '../components/filters';
 import { properties } from '../data/properties';
+import { formatPrice } from '../utils/formatters';
 
 interface PropertiesListingProps {
   onPropertyClick?: (id: string) => void;
@@ -9,14 +10,13 @@ interface PropertiesListingProps {
 
 export const PropertiesListing: React.FC<PropertiesListingProps> = ({ onPropertyClick }) => {
   const [sortBy, setSortBy] = React.useState('featured');
-  const [viewMode, setViewMode] = React.useState<'grid' | 'list'>('grid');
   const [searchQuery, setSearchQuery] = React.useState('');
   const [selectedProject, setSelectedProject] = React.useState('');
   const [propertyTypeFilter, setPropertyTypeFilter] = React.useState('');
   const [minSpace, setMinSpace] = React.useState('');
   const [maxSpace, setMaxSpace] = React.useState('');
   
-  const [visibleCount, setVisibleCount] = React.useState(6);
+  const [visibleCount, setVisibleCount] = React.useState(8);
 
   // Filter and sort properties
   const filteredProperties = React.useMemo(() => {
@@ -80,7 +80,7 @@ export const PropertiesListing: React.FC<PropertiesListingProps> = ({ onProperty
   const hasMore = visibleCount < filteredProperties.length;
 
   const handleLoadMore = () => {
-    setVisibleCount((prev) => Math.min(prev + 6, filteredProperties.length));
+    setVisibleCount((prev) => Math.min(prev + 8, filteredProperties.length));
   };
 
   const handlePropertyClick = (id: string) => {
@@ -95,8 +95,6 @@ export const PropertiesListing: React.FC<PropertiesListingProps> = ({ onProperty
       <HeroSection
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
-        viewMode={viewMode}
-        onViewModeChange={setViewMode}
         sortBy={sortBy}
         onSortChange={setSortBy}
         propertyType={propertyTypeFilter}
@@ -112,21 +110,22 @@ export const PropertiesListing: React.FC<PropertiesListingProps> = ({ onProperty
 
       {/* Properties Grid/List */}
       <section className="py-12 md:py-16">
-        <div className="max-w-[1360px] mx-auto px-4 md:px-8 lg:px-20">
+        <div className="max-w-[1360px] mx-auto px-6 sm:px-4 md:px-8 lg:px-20">
           {/* Grid/List */}
-          <div
-            className={`grid gap-6 ${
-              viewMode === 'grid'
-                ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-                : 'grid-cols-1 lg:grid-cols-2'
-            }`}
-          >
+          <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {visibleProperties.map((property) => (
               <PropertyCard
                 key={property.id}
-                property={property}
-                onClick={handlePropertyClick}
-                viewMode={viewMode}
+                images={[property.image]}
+                price={formatPrice(property.price)}
+                title={property.name}
+                location={`${property.projectName}, ${property.location}`}
+                beds={property.beds}
+                baths={property.baths}
+                space={property.sqft}
+                propertyType={property.propertyType}
+                isNew={property.featured}
+                onClick={() => handlePropertyClick(property.id)}
               />
             ))}
           </div>

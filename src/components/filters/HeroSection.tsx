@@ -4,8 +4,6 @@ import { properties } from '../../data/properties';
 interface HeroSectionProps {
   searchQuery: string;
   onSearchChange: (value: string) => void;
-  viewMode: 'grid' | 'list';
-  onViewModeChange: (mode: 'grid' | 'list') => void;
   sortBy: string;
   onSortChange: (value: string) => void;
   propertyType: string;
@@ -109,8 +107,6 @@ const CustomDropdown: React.FC<{
 export const HeroSection: React.FC<HeroSectionProps> = ({
   searchQuery,
   onSearchChange,
-  viewMode,
-  onViewModeChange,
   sortBy,
   onSortChange,
   propertyType,
@@ -196,44 +192,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               />
             </div>
 
-            {/* Row 2: View Toggle + Results Count */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center bg-white rounded-full p-1 border border-[rgb(230,230,230)]">
-                <button
-                  onClick={() => onViewModeChange('grid')}
-                  className={`p-2 rounded-full transition-colors ${
-                    viewMode === 'grid' ? 'bg-black text-white' : 'text-[rgb(136,136,136)]'
-                  }`}
-                >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <rect x="3" y="3" width="7" height="7" />
-                    <rect x="14" y="3" width="7" height="7" />
-                    <rect x="14" y="14" width="7" height="7" />
-                    <rect x="3" y="14" width="7" height="7" />
-                  </svg>
-                </button>
-                <button
-                  onClick={() => onViewModeChange('list')}
-                  className={`p-2 rounded-full transition-colors ${
-                    viewMode === 'list' ? 'bg-black text-white' : 'text-[rgb(136,136,136)]'
-                  }`}
-                >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <line x1="3" y1="6" x2="21" y2="6" />
-                    <line x1="3" y1="12" x2="21" y2="12" />
-                    <line x1="3" y1="18" x2="21" y2="18" />
-                  </svg>
-                </button>
-              </div>
-              <span
-                className="text-[13px] text-[rgb(136,136,136)] font-light"
-                style={{ fontFamily: 'Geist, sans-serif' }}
-              >
-                {resultsCount} properties
-              </span>
-            </div>
-
-            {/* Row 3: Sort + Type */}
+            {/* Row 2: Sort + Type */}
             <div className="grid grid-cols-2 gap-2">
               <CustomDropdown
                 value={sortBy}
@@ -283,55 +242,26 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* Tablet Layout: 3 Rows */}
           <div className="hidden md:flex lg:hidden flex-col gap-3">
-            {/* Row 1: Search Bar + View Toggle */}
-            <div className="flex items-center gap-3">
-              <div className="relative flex-1">
-                <svg
-                  className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[rgb(136,136,136)]"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-                <input
-                  type="text"
-                  placeholder="Search by location..."
-                  value={searchQuery}
-                  onChange={(e) => onSearchChange(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 bg-white rounded-full text-[15px] font-light outline-none border border-[rgb(230,230,230)] focus:border-[rgb(199,199,199)] transition-colors"
-                  style={{ fontFamily: 'Geist, sans-serif' }}
-                />
-              </div>
-              <div className="flex items-center bg-white rounded-full p-1.5 border border-[rgb(230,230,230)]">
-                <button
-                  onClick={() => onViewModeChange('grid')}
-                  className={`p-2.5 rounded-full transition-colors ${
-                    viewMode === 'grid' ? 'bg-black text-white' : 'text-[rgb(136,136,136)]'
-                  }`}
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <rect x="3" y="3" width="7" height="7" />
-                    <rect x="14" y="3" width="7" height="7" />
-                    <rect x="14" y="14" width="7" height="7" />
-                    <rect x="3" y="14" width="7" height="7" />
-                  </svg>
-                </button>
-                <button
-                  onClick={() => onViewModeChange('list')}
-                  className={`p-2.5 rounded-full transition-colors ${
-                    viewMode === 'list' ? 'bg-black text-white' : 'text-[rgb(136,136,136)]'
-                  }`}
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <line x1="3" y1="6" x2="21" y2="6" />
-                    <line x1="3" y1="12" x2="21" y2="12" />
-                    <line x1="3" y1="18" x2="21" y2="18" />
-                  </svg>
-                </button>
-              </div>
+            {/* Row 1: Search Bar */}
+            <div className="relative">
+              <svg
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[rgb(136,136,136)]"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              <input
+                type="text"
+                placeholder="Search by location..."
+                value={searchQuery}
+                onChange={(e) => onSearchChange(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 bg-white rounded-full text-[15px] font-light outline-none border border-[rgb(230,230,230)] focus:border-[rgb(199,199,199)] transition-colors"
+                style={{ fontFamily: 'Geist, sans-serif' }}
+              />
             </div>
 
             {/* Row 2: Sort + Property Type + Project (3 equal columns) */}
@@ -357,40 +287,32 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               />
             </div>
 
-            {/* Row 3: Space Range + Results Count */}
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <input
-                  type="number"
-                  placeholder="Min m²"
-                  value={minSpace}
-                  onChange={(e) => onMinSpaceChange(e.target.value)}
-                  className="w-28 px-4 py-2.5 bg-[rgb(243,243,243)] rounded-full text-[14px] font-light outline-none border border-transparent hover:border-[rgb(199,199,199)] transition-colors"
-                  style={{ fontFamily: 'Geist, sans-serif' }}
-                />
-                <span className="text-[rgb(136,136,136)] font-light">-</span>
-                <input
-                  type="number"
-                  placeholder="Max m²"
-                  value={maxSpace}
-                  onChange={(e) => onMaxSpaceChange(e.target.value)}
-                  className="w-28 px-4 py-2.5 bg-[rgb(243,243,243)] rounded-full text-[14px] font-light outline-none border border-transparent hover:border-[rgb(199,199,199)] transition-colors"
-                  style={{ fontFamily: 'Geist, sans-serif' }}
-                />
-              </div>
-              <span
-                className="text-[15px] text-[rgb(136,136,136)] font-light whitespace-nowrap"
+            {/* Row 3: Space Range */}
+            <div className="flex items-center gap-3">
+              <input
+                type="number"
+                placeholder="Min m²"
+                value={minSpace}
+                onChange={(e) => onMinSpaceChange(e.target.value)}
+                className="w-28 px-4 py-2.5 bg-[rgb(243,243,243)] rounded-full text-[14px] font-light outline-none border border-transparent hover:border-[rgb(199,199,199)] transition-colors"
                 style={{ fontFamily: 'Geist, sans-serif' }}
-              >
-                {resultsCount} properties found
-              </span>
+              />
+              <span className="text-[rgb(136,136,136)] font-light">-</span>
+              <input
+                type="number"
+                placeholder="Max m²"
+                value={maxSpace}
+                onChange={(e) => onMaxSpaceChange(e.target.value)}
+                className="w-28 px-4 py-2.5 bg-[rgb(243,243,243)] rounded-full text-[14px] font-light outline-none border border-transparent hover:border-[rgb(199,199,199)] transition-colors"
+                style={{ fontFamily: 'Geist, sans-serif' }}
+              />
             </div>
           </div>
 
           {/* Desktop Layout: Single Row */}
           <div className="hidden lg:flex items-center gap-3">
             {/* Location Search */}
-            <div className="relative flex-1 max-w-[300px]">
+            <div className="relative flex-1">
               <svg
                 className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[rgb(136,136,136)]"
                 viewBox="0 0 24 24"
@@ -409,35 +331,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 className="w-full pl-12 pr-4 py-3 bg-[rgb(243,243,243)] rounded-full text-[14px] font-light outline-none hover:bg-[rgb(230,230,230)] transition-colors"
                 style={{ fontFamily: 'Geist, sans-serif' }}
               />
-            </div>
-
-            {/* View Toggle */}
-            <div className="flex items-center bg-white rounded-full p-1 border border-[rgb(230,230,230)]">
-              <button
-                onClick={() => onViewModeChange('grid')}
-                className={`p-2.5 rounded-full transition-colors ${
-                  viewMode === 'grid' ? 'bg-black text-white' : 'text-[rgb(136,136,136)] hover:text-[rgb(44,44,44)]'
-                }`}
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <rect x="3" y="3" width="7" height="7" />
-                  <rect x="14" y="3" width="7" height="7" />
-                  <rect x="14" y="14" width="7" height="7" />
-                  <rect x="3" y="14" width="7" height="7" />
-                </svg>
-              </button>
-              <button
-                onClick={() => onViewModeChange('list')}
-                className={`p-2.5 rounded-full transition-colors ${
-                  viewMode === 'list' ? 'bg-black text-white' : 'text-[rgb(136,136,136)] hover:text-[rgb(44,44,44)]'
-                }`}
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <line x1="3" y1="6" x2="21" y2="6" />
-                  <line x1="3" y1="12" x2="21" y2="12" />
-                  <line x1="3" y1="18" x2="21" y2="18" />
-                </svg>
-              </button>
             </div>
 
             {/* Filters */}
