@@ -45,6 +45,70 @@ export const Navigation: React.FC = () => {
             </svg>
           </button>
 
+          {/* Desktop Navigation Links */}
+          <div className="hidden md:flex items-center gap-8">
+            <a
+              href="/"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate('/');
+              }}
+              className="text-[14px] font-light text-[rgb(44,44,44)] hover:text-[rgb(136,136,136)] transition-colors"
+              style={{ fontFamily: 'Geist, sans-serif' }}
+            >
+              Properties
+            </a>
+            <a
+              href="/projects"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate('/projects');
+              }}
+              className="text-[14px] font-light text-[rgb(44,44,44)] hover:text-[rgb(136,136,136)] transition-colors"
+              style={{ fontFamily: 'Geist, sans-serif' }}
+            >
+              Projects
+            </a>
+          </div>
+
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <div className="absolute top-full left-0 right-0 bg-white border-t border-[rgb(230,230,230)] py-4 px-4 md:hidden">
+              <a
+                href="/"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate('/');
+                  setMobileMenuOpen(false);
+                }}
+                className="block py-3 text-[16px] font-light text-[rgb(44,44,44)]"
+                style={{ fontFamily: 'Geist, sans-serif' }}
+              >
+                Properties
+              </a>
+              <a
+                href="/projects"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate('/projects');
+                  setMobileMenuOpen(false);
+                }}
+                className="block py-3 text-[16px] font-light text-[rgb(44,44,44)]"
+                style={{ fontFamily: 'Geist, sans-serif' }}
+              >
+                Projects
+              </a>
+              <a
+                href="#contact"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block py-3 text-[16px] font-light text-[rgb(44,44,44)]"
+                style={{ fontFamily: 'Geist, sans-serif' }}
+              >
+                Contact Us
+              </a>
+            </div>
+          )}
+
           {/* Contact Button - Desktop */}
           <a
             href="#contact"

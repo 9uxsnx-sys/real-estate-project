@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { Navigation } from './components/layout';
-import { PropertiesListing, PropertyDetail } from './pages';
+import { PropertiesListing, PropertyDetail, Projects, ProjectDetail } from './pages';
 
 export default function App() {
   const navigate = useNavigate();
@@ -23,6 +23,8 @@ export default function App() {
           }
         />
         <Route path="/property/:id" element={<PropertyDetail />} />
+        <Route path="/projects" element={<><Navigation /><Projects /></>} />
+        <Route path="/projects/:projectId" element={<><Navigation /><ProjectDetail /></>} />
       </Routes>
     </div>
   );
