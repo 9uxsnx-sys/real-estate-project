@@ -7,6 +7,7 @@ import {
   PropertyLocation,
 } from '../components/property-detail';
 import { ProjectSection, ProjectSectionData, ProjectContactSidebar } from '../components/project-detail';
+import { PropertyCard } from '@/components/ui/property-card';
 import { properties } from '../data/properties';
 import { PropertyDetail as PropertyDetailType } from '../types';
 import { formatPrice } from '../utils';
@@ -174,6 +175,46 @@ export const ProjectDetail: React.FC = () => {
               lat={property.map_location?.lat}
               lng={property.map_location?.lng}
             />
+
+            {/* Properties in This Project */}
+            <div className="py-6 border-b border-[rgb(230,230,230)]">
+              <h3
+                className="text-[20px] md:text-[24px] font-semibold text-[rgb(44,44,44)] mb-6"
+                style={{ fontFamily: 'Geist, sans-serif' }}
+              >
+                Properties in This Project
+              </h3>
+              
+              {/* Properties Grid - Show up to 3 */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                {projectProperties.slice(0, 3).map((projProperty) => (
+                  <PropertyCard
+                    key={projProperty.id}
+                    images={[projProperty.image]}
+                    price={formatPrice(projProperty.price)}
+                    title={projProperty.name}
+                    location={`${projProperty.projectName}, ${projProperty.location}`}
+                    beds={projProperty.beds}
+                    baths={projProperty.baths}
+                    space={projProperty.sqft}
+                    propertyType={projProperty.propertyType}
+                    isNew={projProperty.featured}
+                    onClick={() => navigate(`/property/${projProperty.id}`)}
+                  />
+                ))}
+              </div>
+
+              {/* See More Button */}
+              {projectProperties.length > 3 && (
+                <button
+                  onClick={() => navigate(`/properties?project=${encodeURIComponent(property.projectName)}`)}
+                  className="w-full py-3 px-6 border border-[rgb(230,230,230)] rounded-full text-[14px] font-light text-[rgb(44,44,44)] hover:bg-[rgb(250,250,250)] transition-colors"
+                  style={{ fontFamily: 'Geist, sans-serif' }}
+                >
+                  See More
+                </button>
+              )}
+            </div>
           </div>
 
           {/* Sidebar - Right */}

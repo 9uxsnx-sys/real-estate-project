@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { PropertyCard } from '@/components/ui/property-card';
 import { HeroSection } from '../components/filters';
 import { properties } from '../data/properties';
@@ -9,9 +10,12 @@ interface PropertiesListingProps {
 }
 
 export const PropertiesListing: React.FC<PropertiesListingProps> = ({ onPropertyClick }) => {
+  const [searchParams] = useSearchParams();
+  const projectParam = searchParams.get('project');
+  
   const [sortBy, setSortBy] = React.useState('featured');
   const [searchQuery, setSearchQuery] = React.useState('');
-  const [selectedProject, setSelectedProject] = React.useState('');
+  const [selectedProject, setSelectedProject] = React.useState(projectParam || '');
   const [propertyTypeFilter, setPropertyTypeFilter] = React.useState('');
   const [minSpace, setMinSpace] = React.useState('');
   const [maxSpace, setMaxSpace] = React.useState('');
