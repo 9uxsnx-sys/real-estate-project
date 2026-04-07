@@ -177,16 +177,32 @@ export const ProjectDetail: React.FC = () => {
             />
 
             {/* Properties in This Project */}
-            <div className="py-6 border-b border-[rgb(230,230,230)]">
-              <h3
-                className="text-[20px] md:text-[24px] font-semibold text-[rgb(44,44,44)] mb-6"
-                style={{ fontFamily: 'Geist, sans-serif' }}
-              >
-                Properties in This Project
-              </h3>
+            <div className="py-6 border-t border-b border-[rgb(230,230,230)]">
+              {/* Section Header with Title and See More */}
+              <div className="flex items-center justify-between mb-6">
+                <h3
+                  className="text-[20px] md:text-[24px] font-semibold text-[rgb(44,44,44)]"
+                  style={{ fontFamily: 'Geist, sans-serif' }}
+                >
+                  Properties in This Project
+                </h3>
+                
+                {projectProperties.length > 3 && (
+                  <button
+                    onClick={() => navigate(`/properties?project=${encodeURIComponent(property.projectName)}`)}
+                    className="flex items-center gap-1 text-[14px] font-light text-[rgb(44,44,44)] hover:text-black transition-colors"
+                    style={{ fontFamily: 'Geist, sans-serif' }}
+                  >
+                    See More
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                )}
+              </div>
               
               {/* Properties Grid - Show up to 3 */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {projectProperties.slice(0, 3).map((projProperty) => (
                   <PropertyCard
                     key={projProperty.id}
@@ -203,17 +219,6 @@ export const ProjectDetail: React.FC = () => {
                   />
                 ))}
               </div>
-
-              {/* See More Button */}
-              {projectProperties.length > 3 && (
-                <button
-                  onClick={() => navigate(`/properties?project=${encodeURIComponent(property.projectName)}`)}
-                  className="w-full py-3 px-6 border border-[rgb(230,230,230)] rounded-full text-[14px] font-light text-[rgb(44,44,44)] hover:bg-[rgb(250,250,250)] transition-colors"
-                  style={{ fontFamily: 'Geist, sans-serif' }}
-                >
-                  See More
-                </button>
-              )}
             </div>
           </div>
 
