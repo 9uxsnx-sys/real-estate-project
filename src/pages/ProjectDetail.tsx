@@ -187,7 +187,7 @@ export const ProjectDetail: React.FC = () => {
                   Properties in This Project
                 </h3>
                 
-                {projectProperties.length > 3 && (
+                {projectProperties.length >= 3 && (
                   <button
                     onClick={() => navigate(`/properties?project=${encodeURIComponent(property.projectName)}`)}
                     className="flex items-center gap-1 text-[14px] font-light text-[rgb(44,44,44)] hover:text-black transition-colors"
