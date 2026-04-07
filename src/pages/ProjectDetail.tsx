@@ -1,82 +1,192 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import {
+  PropertyGallery,
+  PropertySpecs,
+  PropertyFeatures,
+  PropertyLocation,
+  PropertyContactSidebar,
+} from '../components/property-detail';
+import { ProjectSection, ProjectSectionData } from '../components/project-detail';
 import { properties } from '../data/properties';
+import { PropertyDetail as PropertyDetailType } from '../types';
+import { formatPrice } from '../utils';
+
+// Extended property data with detail fields
+const getPropertyWithDetails = (id: string): PropertyDetailType | null => {
+  const property = properties.find((p) => p.id === id);
+  if (!property) return null;
+
+  // Add detail fields to the property
+  return {
+    ...property,
+    description: `Introducing ${property.name}, a striking ${property.beds}-bedroom residence designed for both luxury living and smart investment. Located in the prestigious neighborhood of ${property.location}, this ${property.spaceSqm} m² home features bold modern architecture, open-plan interiors, and refined finishes. With ${property.baths} bathrooms, spacious living areas, and curated landscaping, it's a statement of comfort, style, and long-term value.`,
+    features: [
+      { name: '1', feature_name: `${property.beds} Bedrooms & ${property.baths} Bathrooms`, icon: 'home' },
+      { name: '2', feature_name: 'Bold Contemporary Design', icon: 'home' },
+      { name: '3', feature_name: 'Professionally Landscaped Garden', icon: 'tree' },
+      { name: '4', feature_name: 'Spacious Driveway & Garage', icon: 'car' },
+      { name: '5', feature_name: 'Investment-Ready Property', icon: 'trending-up' },
+    ],
+    gallery: [
+      property.image,
+      property.image,
+      property.image,
+      property.image,
+      property.image,
+    ],
+    propertyCode: `VH-${property.id.toUpperCase().padStart(3, '0')}`,
+    whatsappNumber: '1234567890',
+    map_location: {
+      lat: 34.100222,
+      lng: -118.450709,
+      address: property.location,
+    },
+  };
+};
 
 export const ProjectDetail: React.FC = () => {
+  const navigate = useNavigate();
   const { projectId } = useParams<{ projectId: string }>();
-  
-  // Find project details from properties data
+
+  // Find all properties in this project by project name (URL param is kebab-case)
   const projectProperties = properties.filter(
     (p) => p.projectName.toLowerCase().replace(/\s+/g, '-') === projectId
   );
+
+  // Get first property to display (Property Detail layout expects a single property)
+  // In a real app, you might aggregate data from all properties
+  const property = projectProperties.length > 0 
+    ? getPropertyWithDetails(projectProperties[0].id)
+    : null;
+
+  if (!property) {
+    return (
+      <div className="min-h-screen bg-white">
+        <div className="max-w-[1360px] mx-auto px-4 md:px-8 lg:px-20 py-12 text-center">
+          <h1
+            className="text-2xl font-semibold text-[rgb(44,44,44)] mb-4"
+            style={{ fontFamily: 'Geist, sans-serif' }}
+          >
+            Project Not Found
+          </h1>
+          <button
+            onClick={() => navigate('/projects')}
+            className="px-6 py-3 bg-black text-white rounded-full hover:bg-[rgb(44,44,44)] transition-colors"
+          >
+            Back to Projects
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Sample custom sections - deployable by owner
+  const projectImages = [property.image, property.image, property.image, property.image];
   
-  const projectName = projectProperties[0]?.projectName || 'Project Not Found';
-  const projectLocation = projectProperties[0]?.location || '';
+  const customSections: ProjectSectionData[] = [
+    {
+      id: 'studio',
+      title: 'Studio Units',
+      images: projectImages.slice(0, 4),
+      description: 'Our studio apartments feature open floor plans with floor-to-ceiling windows, modern kitchenettes, and stunning city views. Perfect for young professionals or as investment properties.',
+      features: [
+        'Open floor plan design',
+        'Floor-to-ceiling windows',
+        'Modern kitchenette',
+        'City skyline views',
+        'Smart home integration',
+      ],
+    },
+    {
+      id: 'f1',
+      title: 'First Floor - F1',
+      images: projectImages.slice(0, 4),
+      description: 'The ground floor features an elegant grand lobby with 24/7 concierge service, package room, and direct access to all building amenities.',
+      features: [
+        'Grand lobby entrance',
+        '24/7 concierge desk',
+        'Secure package room',
+        'Co-working lounge',
+      ],
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Simple Header */}
-      <section className="py-10 md:py-12 border-b border-[rgb(230,230,230)]">
-        <div className="max-w-[1360px] mx-auto px-6 sm:px-4 md:px-8 lg:px-20">
-          <h1 
-            className="text-[24px] md:text-[32px] font-semibold text-[rgb(44,44,44)]"
-            style={{ fontFamily: 'Geist, sans-serif' }}
-          >
-            {projectName}
-          </h1>
-          <p 
-            className="text-[14px] md:text-[16px] text-[rgb(136,136,136)] font-light mt-2"
-            style={{ fontFamily: 'Geist, sans-serif' }}
-          >
-            {projectLocation}
-          </p>
-        </div>
-      </section>
 
-      {/* Placeholder Content */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-[1360px] mx-auto px-6 sm:px-4 md:px-8 lg:px-20">
-          <div className="text-center">
-            <div className="w-16 h-16 bg-[rgb(243,243,243)] rounded-full flex items-center justify-center mx-auto mb-6">
-              <svg 
-                width="32" 
-                height="32" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="rgb(136,136,136)" 
-                strokeWidth="1.5"
+      <div className="max-w-[1360px] mx-auto px-4 md:px-8 lg:px-20 py-6 md:py-10">
+        {/* Back Button */}
+        <button
+          onClick={() => navigate('/projects')}
+          className="flex items-center gap-2 text-[rgb(44,44,44)] hover:text-black transition-colors mb-6"
+          style={{ fontFamily: 'Geist, sans-serif' }}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+          Back to Projects
+        </button>
+
+        {/* Gallery - Full Width */}
+        <PropertyGallery images={property.gallery || [property.image]} propertyName={property.name} />
+
+        {/* Title Only */}
+        <div className="mt-6 mb-4">
+          <h1
+            className="text-[28px] md:text-[36px] lg:text-[40px] font-semibold text-[rgb(44,44,44)]"
+            style={{ fontFamily: 'Geist, sans-serif' }}
+          >
+            {property.projectName}
+          </h1>
+        </div>
+
+        {/* Two Column Section: Content Left, Sidebar Right */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] xl:grid-cols-[1fr_340px] gap-8 lg:gap-12 mt-6">
+          {/* Content - Left */}
+          <div className="order-1">
+            {/* Description */}
+            <div className="py-6 border-b border-[rgb(230,230,230)]">
+              <h3
+                className="text-[20px] md:text-[24px] font-semibold text-[rgb(44,44,44)] mb-4"
+                style={{ fontFamily: 'Geist, sans-serif' }}
               >
-                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-                <polyline points="9 22 9 12 15 12 15 22" />
-              </svg>
+                Overview
+              </h3>
+              <p
+                className="text-[14px] md:text-[16px] text-[rgb(44,44,44)] font-light leading-relaxed"
+                style={{ fontFamily: 'Geist, sans-serif' }}
+              >
+                {property.description}
+              </p>
             </div>
-            <h2 
-              className="text-[18px] md:text-[20px] font-medium text-[rgb(44,44,44)] mb-3"
-              style={{ fontFamily: 'Geist, sans-serif' }}
-            >
-              Project Detail Page
-            </h2>
-            <p 
-              className="text-[14px] text-[rgb(136,136,136)] font-light max-w-md mx-auto"
-              style={{ fontFamily: 'Geist, sans-serif' }}
-            >
-              This page will showcase the {projectName} development with full details, 
-              gallery, amenities, and available units. Coming soon.
-            </p>
-            
-            {projectProperties.length > 0 && (
-              <div className="mt-8">
-                <p 
-                  className="text-[14px] text-[rgb(136,136,136)] font-light"
-                  style={{ fontFamily: 'Geist, sans-serif' }}
-                >
-                  {projectProperties.length} properties available in this project
-                </p>
-              </div>
-            )}
+
+            {/* Features */}
+            <PropertyFeatures features={property.features} />
+
+            {/* Custom Sections - Deployable by Owner */}
+            {customSections.map((section, index) => (
+              <ProjectSection key={section.id} {...section} index={index} />
+            ))}
+
+            {/* Location */}
+            <PropertyLocation
+              address={property.map_location?.address}
+              lat={property.map_location?.lat}
+              lng={property.map_location?.lng}
+            />
+          </div>
+
+          {/* Sidebar - Right */}
+          <div className="order-2">
+            <PropertyContactSidebar
+              property={property}
+              propertyCode={property.propertyCode}
+              whatsappNumber={property.whatsappNumber}
+            />
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 };
