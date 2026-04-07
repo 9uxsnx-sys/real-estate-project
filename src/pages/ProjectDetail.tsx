@@ -189,7 +189,7 @@ export const ProjectDetail: React.FC = () => {
                 
                 {projectProperties.length >= 1 && (
                   <button
-                    onClick={() => navigate(`/properties?project=${encodeURIComponent(property.projectName)}`)}
+                    onClick={() => navigate(`/?project=${encodeURIComponent(property.projectName)}`)}
                     className="flex items-center gap-1 text-[14px] font-light text-[rgb(44,44,44)] hover:text-black transition-colors"
                     style={{ fontFamily: 'Geist, sans-serif' }}
                   >
