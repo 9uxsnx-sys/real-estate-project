@@ -70,7 +70,7 @@ export const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
         className="absolute top-6 right-6 z-10 p-2 hover:opacity-70 transition-opacity"
         aria-label="Close gallery"
       >
-        <X size={20} strokeWidth={1.5} className="text-[rgb(136,136,136)]" />
+        <X size={20} strokeWidth={1.5} className="text-white" />
       </button>
 
       {/* Left Arrow */}
@@ -82,7 +82,7 @@ export const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
         className="absolute left-6 z-10 p-2 hover:opacity-70 transition-opacity"
         aria-label="Previous image"
       >
-        <ChevronLeft size={20} strokeWidth={1.5} className="text-[rgb(136,136,136)]" />
+        <ChevronLeft size={20} strokeWidth={1.5} className="text-white" />
       </button>
 
       {/* Image Container */}
@@ -107,7 +107,7 @@ export const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
         className="absolute right-6 z-10 p-2 hover:opacity-70 transition-opacity"
         aria-label="Next image"
       >
-        <ChevronRight size={20} strokeWidth={1.5} className="text-[rgb(136,136,136)]" />
+        <ChevronRight size={20} strokeWidth={1.5} className="text-white" />
       </button>
 
       {/* Dots */}
