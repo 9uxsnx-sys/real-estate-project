@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { Check } from 'lucide-react';
+import { ImageGalleryModal } from '../ui/ImageGalleryModal';
 
 export interface ProjectSectionData {
   id: string;
@@ -19,10 +21,21 @@ export const ProjectSection: React.FC<ProjectSectionProps> = ({
   description,
   features,
 }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalInitialIndex, setModalInitialIndex] = useState(0);
+
   // Ensure we have at least 4 images (use duplicates if needed)
   const displayImages = images.length >= 4 
     ? images.slice(0, 4) 
     : [...images, ...Array(4 - images.length).fill(images[0] || '')];
+
+  const remainingCount = images.length - 4;
+  const hasMoreImages = remainingCount > 0;
+
+  const openModal = (startIndex: number) => {
+    setModalInitialIndex(startIndex);
+    setIsModalOpen(true);
+  };
 
   return (
     <div className="py-6 border-b border-[rgb(230,230,230)]">
@@ -37,12 +50,30 @@ export const ProjectSection: React.FC<ProjectSectionProps> = ({
       {/* Gallery Grid - 2x2 Layout */}
       <div className="grid grid-cols-2 gap-4 mb-6">
         {displayImages.map((image, index) => (
-          <div key={index} className="aspect-[16/9] overflow-hidden rounded-2xl">
+          <div 
+            key={index} 
+            className="relative aspect-[16/9] overflow-hidden rounded-2xl cursor-pointer"
+            onClick={() => openModal(index)}
+          >
             <img
               src={image}
               alt={`${title} - ${index + 1}`}
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
             />
+            {/* +X Overlay on the last image when more exist */}
+            {index === 3 && hasMoreImages && (
+              <div 
+                className="absolute inset-0 flex items-center justify-center rounded-2xl"
+                style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}
+              >
+                <span 
+                  className="text-white text-2xl font-semibold"
+                  style={{ fontFamily: 'Geist, sans-serif' }}
+                >
+                  +{remainingCount}
+                </span>
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -93,6 +124,14 @@ export const ProjectSection: React.FC<ProjectSectionProps> = ({
           </div>
         </div>
       )}
+
+      {/* Image Gallery Modal */}
+      <ImageGalleryModal
+        images={images}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        initialIndex={modalInitialIndex}
+      />
     </div>
   );
 };
