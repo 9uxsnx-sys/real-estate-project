@@ -5,9 +5,8 @@ import {
   PropertySpecs,
   PropertyFeatures,
   PropertyLocation,
-  PropertyContactSidebar,
 } from '../components/property-detail';
-import { ProjectSection, ProjectSectionData } from '../components/project-detail';
+import { ProjectSection, ProjectSectionData, ProjectContactSidebar } from '../components/project-detail';
 import { properties } from '../data/properties';
 import { PropertyDetail as PropertyDetailType } from '../types';
 import { formatPrice } from '../utils';
@@ -179,9 +178,8 @@ export const ProjectDetail: React.FC = () => {
 
           {/* Sidebar - Right */}
           <div className="order-2">
-            <PropertyContactSidebar
+            <ProjectContactSidebar
               property={property}
-              propertyCode={property.propertyCode}
               whatsappNumber={property.whatsappNumber}
             />
           </div>
