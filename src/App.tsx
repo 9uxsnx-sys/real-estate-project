@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { Navigation } from './components/layout';
+import { ScrollToTop } from './components/ScrollToTop';
 import { PropertiesListing, PropertyDetail, Projects, ProjectDetail } from './pages';
 
 export default function App() {
@@ -12,6 +13,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white">
+      <ScrollToTop />
       <Routes>
         <Route
           path="/"
