@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Sparkles } from 'lucide-react';
 import { PropertyFeature } from '../../types';
 
@@ -7,6 +8,7 @@ interface PropertyFeaturesProps {
 }
 
 export const PropertyFeatures: React.FC<PropertyFeaturesProps> = ({ features }) => {
+  const { t } = useTranslation();
   // Default features if none provided
   const defaultFeatures: PropertyFeature[] = [
     { name: '1', feature_name: '6 Bedrooms & 4 Bathrooms', icon: 'sparkles' },
@@ -24,7 +26,7 @@ export const PropertyFeatures: React.FC<PropertyFeaturesProps> = ({ features }) 
         className="text-[20px] md:text-[24px] font-semibold text-[rgb(44,44,44)] mb-4"
         style={{ fontFamily: 'Geist, sans-serif' }}
       >
-        Features
+        {t('property.features')}
       </h3>
       <div className="flex flex-col gap-4">
         {displayFeatures.map((feature, index) => (

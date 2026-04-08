@@ -15,12 +15,38 @@ export const LanguageSwitcher: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const currentLang = lang || i18n.language || 'en';
+  const isRTL = currentLang === 'ar';
   const currentLanguage = languages.find((l) => l.code === currentLang) || languages[0];
 
   const handleLanguageChange = (code: string) => {
-    const newPath = window.location.pathname.replace(`/${currentLang}/`, `/${code}/`);
-    navigate(newPath);
+    // Get current path and extract the path after the language prefix
+    const currentPath = window.location.pathname;
+    const pathParts = currentPath.split('/').filter(Boolean);
+    
+    // Check if first segment is a language code
+    const langCodes = languages.map(l => l.code);
+    const firstSegment = pathParts[0];
+    const hasLangPrefix = langCodes.includes(firstSegment);
+    
+    // Build new path: keep everything after language prefix, add new language
+    let newPath: string;
+    if (hasLangPrefix) {
+      // Replace existing language prefix
+      const restOfPath = pathParts.slice(1).join('/');
+      newPath = `/${code}/${restOfPath}`;
+    } else {
+      // Add language prefix to current path
+      newPath = `/${code}${currentPath}`;
+    }
+    
+    // Ensure path ends correctly (handle root path case)
+    if (newPath === `/${code}/` || newPath === `/${code}`) {
+      newPath = `/${code}/`;
+    }
+    
+    // Update language and navigate
     i18n.changeLanguage(code);
+    navigate(newPath);
     setIsOpen(false);
   };
 
@@ -51,12 +77,12 @@ export const LanguageSwitcher: React.FC = () => {
             className="fixed inset-0 z-40"
             onClick={() => setIsOpen(false)}
           />
-          <div className="absolute top-full left-0 mt-2 py-2 bg-white border border-[rgb(230,230,230)] rounded-xl shadow-lg z-50 min-w-[120px]">
+          <div className={`absolute top-full mt-2 py-2 bg-white border border-[rgb(230,230,230)] rounded-xl shadow-lg z-50 min-w-[120px] ${isRTL ? 'right-0' : 'left-0'}`}>
             {languages.map((language) => (
               <button
                 key={language.code}
                 onClick={() => handleLanguageChange(language.code)}
-                className={`w-full px-4 py-2 text-left text-[13px] transition-colors ${
+                className={`w-full px-4 py-2 text-start text-[13px] transition-colors flex items-center gap-2 ${
                   currentLang === language.code
                     ? 'bg-[rgb(245,245,245)] text-black font-medium'
                     : 'text-[rgb(44,44,44)] hover:bg-[rgb(250,250,250)]'
@@ -64,7 +90,7 @@ export const LanguageSwitcher: React.FC = () => {
                 style={{ fontFamily: 'Geist, sans-serif' }}
               >
                 <span className="font-medium">{language.label}</span>
-                <span className="ml-2 text-[rgb(136,136,136)]">{language.name}</span>
+                <span className="text-[rgb(136,136,136)]">{language.name}</span>
               </button>
             ))}
           </div>

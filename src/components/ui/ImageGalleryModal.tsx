@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 interface ImageGalleryModalProps {
@@ -14,6 +15,7 @@ export const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
   onClose,
   initialIndex = 0,
 }) => {
+  const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [scale, setScale] = useState(1);
   const [translate, setTranslate] = useState({ x: 0, y: 0 });
@@ -138,7 +140,7 @@ export const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
           onClose();
         }}
         className="absolute top-6 right-6 z-10 p-2 hover:opacity-70 transition-opacity"
-        aria-label="Close gallery"
+        aria-label={t('gallery.close')}
       >
         <X size={20} strokeWidth={1.5} className="text-white" />
       </button>
@@ -150,7 +152,7 @@ export const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
           goToPrevious();
         }}
         className="hidden md:block absolute left-6 z-10 p-2 hover:opacity-70 transition-opacity"
-        aria-label="Previous image"
+        aria-label={t('gallery.previous')}
       >
         <ChevronLeft size={20} strokeWidth={1.5} className="text-white" />
       </button>
@@ -184,7 +186,7 @@ export const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
           goToNext();
         }}
         className="hidden md:block absolute right-6 z-10 p-2 hover:opacity-70 transition-opacity"
-        aria-label="Next image"
+        aria-label={t('gallery.next')}
       >
         <ChevronRight size={20} strokeWidth={1.5} className="text-white" />
       </button>
@@ -202,7 +204,7 @@ export const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
             style={{
               backgroundColor: index === currentIndex ? '#ffffff' : 'rgba(255, 255, 255, 0.4)',
             }}
-            aria-label={`Go to image ${index + 1}`}
+            aria-label={`${t('gallery.goTo')} ${index + 1}`}
           />
         ))}
       </div>

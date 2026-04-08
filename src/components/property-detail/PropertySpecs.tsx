@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Home, Bed, Bath, Square } from 'lucide-react';
 import { Property } from '../../types';
 import { getPropertyTypeLabel } from '../../utils';
@@ -8,11 +9,12 @@ interface PropertySpecsProps {
 }
 
 export const PropertySpecs: React.FC<PropertySpecsProps> = ({ property }) => {
+  const { t } = useTranslation();
   const specs = [
     { icon: Home, label: getPropertyTypeLabel(property.propertyType) },
-    { icon: Bed, label: `${property.beds} Beds` },
-    { icon: Bath, label: `${property.baths} Baths` },
-    { icon: Square, label: `${property.spaceSqm} m²` },
+    { icon: Bed, label: `${property.beds} ${t('property.beds')}` },
+    { icon: Bath, label: `${property.baths} ${t('property.baths')}` },
+    { icon: Square, label: `${property.spaceSqm} ${t('property.sqft')}` },
   ];
 
   return (

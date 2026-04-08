@@ -197,15 +197,6 @@ npm run build
 npm run preview
 ```
 
-## Routes
-
-| Route | Description |
-|-------|-------------|
-| `/` | Property Listing Page |
-| `/property/:id` | Property Detail Page |
-| `/projects` | Projects Showcase Page |
-| `/projects/:projectId` | Project Detail Page |
-
 ## Contributing
 
 This project follows a strict folder structure. When adding new components:

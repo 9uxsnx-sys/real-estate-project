@@ -27,9 +27,6 @@ export const ProjectAlternatingSection = ({
   const projectNumber = String(index + 1).padStart(2, '0');
   const isReversed = index % 2 === 1;
 
-  // Alternate background colors for visual separation
-  const bgColor = isReversed ? 'bg-[rgb(250,250,250)]' : 'bg-white';
-
   const getDescription = (name: string) => {
     const descriptions: Record<string, string> = {
       'Bel Air Heights': 'An exclusive collection of luxury residences nestled in the prestigious hills of Bel Air. Each property offers panoramic city views and ultimate privacy.',
@@ -43,7 +40,7 @@ export const ProjectAlternatingSection = ({
   };
 
   return (
-    <section className={`py-20 md:py-28 lg:py-36 ${bgColor}`}>
+    <section className="py-20 md:py-28 lg:py-36 bg-white border-b border-[rgb(230,230,230)]">
       <div className="max-w-[1280px] mx-auto px-6 sm:px-8 lg:px-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

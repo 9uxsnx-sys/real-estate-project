@@ -61,34 +61,18 @@ export const Projects: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Page Header - Minimal */}
+      {/* Page Header */}
       <section className="py-16 md:py-20 lg:py-24 border-b border-[rgb(230,230,230)]">
         <div className="max-w-[1360px] mx-auto px-6 sm:px-4 md:px-8 lg:px-20">
-          <motion.div
+          <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="max-w-2xl"
+            className="text-[32px] md:text-[40px] lg:text-[48px] font-semibold text-[rgb(44,44,44)] leading-[1.2]"
+            style={{ fontFamily: 'Geist, sans-serif' }}
           >
-            <span
-              className="text-[12px] font-medium tracking-[0.15em] uppercase text-[rgb(136,136,136)] block mb-4"
-              style={{ fontFamily: 'Geist, sans-serif' }}
-            >
-              {t('project.ourPortfolio')}
-            </span>
-            <h1
-              className="text-[36px] md:text-[48px] lg:text-[56px] font-semibold text-[rgb(44,44,44)] leading-[1.1] mb-6"
-              style={{ fontFamily: 'Geist, sans-serif' }}
-            >
-              {t('project.exclusiveDevelopments')}
-            </h1>
-            <p
-              className="text-[16px] md:text-[18px] text-[rgb(136,136,136)] font-light leading-relaxed"
-              style={{ fontFamily: 'Geist, sans-serif' }}
-            >
-              {t('project.discoverOurPortfolio')}
-            </p>
-          </motion.div>
+            {t('hero.ourProjects')}
+          </motion.h1>
         </div>
       </section>
 
@@ -116,13 +100,13 @@ export const Projects: React.FC = () => {
               className="text-[24px] md:text-[28px] font-semibold text-[rgb(44,44,44)] mb-4"
               style={{ fontFamily: 'Geist, sans-serif' }}
             >
-              {t('project.readyToFindYourHome')}
+              {t('project.readyToFind')}
             </h3>
             <p
               className="text-[14px] md:text-[16px] text-[rgb(136,136,136)] font-light mb-8"
               style={{ fontFamily: 'Geist, sans-serif' }}
             >
-              {t('project.browseAllAvailableProperties')}
+              {t('project.browseDescription')}
             </p>
             <button
               onClick={() => navigate(`/${currentLang}`)}

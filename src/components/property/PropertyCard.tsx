@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Property } from '../../types';
 import { formatPrice, getPropertyTypeLabel } from '../../utils';
 
@@ -9,6 +10,7 @@ interface PropertyCardProps {
 }
 
 export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onClick, viewMode = 'grid' }) => {
+  const { t } = useTranslation();
   const handleClick = () => {
     if (onClick) {
       onClick(property.id);
@@ -79,15 +81,15 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onClick, v
             </span>
             <span className="text-[rgb(199,199,199)]">•</span>
             <span className="font-light" style={{ fontFamily: 'Geist, sans-serif' }}>
-              {property.spaceSqm} m²
+              {property.spaceSqm} {t('property.sqft')}
             </span>
             <span className="text-[rgb(199,199,199)]">•</span>
             <span className="font-light" style={{ fontFamily: 'Geist, sans-serif' }}>
-              {property.beds} Beds
+              {property.beds} {t('property.beds')}
             </span>
             <span className="text-[rgb(199,199,199)]">•</span>
             <span className="font-light" style={{ fontFamily: 'Geist, sans-serif' }}>
-              {property.baths} Baths
+              {property.baths} {t('property.baths')}
             </span>
           </div>
 

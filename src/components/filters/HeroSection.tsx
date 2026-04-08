@@ -120,7 +120,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onMaxSpaceChange,
   resultsCount,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   // Get unique projects from properties data
   const projectOptions = React.useMemo(() => {
     const uniqueProjects = [...new Set(properties.map((p) => p.projectName))];
@@ -128,7 +128,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       { value: '', label: t('hero.allProjects') },
       ...uniqueProjects.map((name) => ({ value: name, label: name })),
     ];
-  }, []);
+  }, [i18n.language, t]);
 
   const sortOptions = [
     { value: 'featured', label: t('hero.featured') },
@@ -149,22 +149,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   ];
 
   return (
-    <section className="bg-white border-b border-[rgb(199,199,199)] py-6 md:py-10">
+    <section className="bg-white border-b border-[rgb(230,230,230)] py-6 md:py-10">
       <div className="max-w-[1360px] mx-auto px-4 md:px-8 lg:px-20">
         {/* Header */}
         <div className="mb-4 md:mb-6">
           <h1
-            className="text-[22px] sm:text-[28px] md:text-[36px] font-semibold text-[rgb(44,44,44)] uppercase mb-1 md:mb-2"
+            className="text-[32px] md:text-[40px] lg:text-[48px] font-semibold text-[rgb(44,44,44)] leading-[1.2]"
             style={{ fontFamily: 'Geist, sans-serif' }}
           >
-            {t('nav.properties')} <span className="text-[rgb(102,252,117)]">Listing</span>
+            {t('hero.ourProperties')}
           </h1>
-          <p
-            className="text-[13px] md:text-[16px] text-[rgb(136,136,136)] font-light max-w-[600px]"
-            style={{ fontFamily: 'Geist, sans-serif' }}
-          >
-            {t('hero.searchPlaceholder')}
-          </p>
         </div>
 
         {/* Unified Search & Filter Bar */}
@@ -186,7 +180,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </svg>
               <input
                 type="text"
-                placeholder="Search by location..."
+                placeholder={t('hero.searchByLocation')}
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 bg-white rounded-full text-[14px] font-light outline-none border border-[rgb(230,230,230)] focus:border-[rgb(199,199,199)] transition-colors"
@@ -216,7 +210,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 value={selectedProject}
                 options={projectOptions}
                 onChange={onProjectChange}
-                placeholder="All Projects"
+                placeholder={t('hero.allProjects')}
                 width="w-full"
               />
               <div className="flex items-center gap-2 bg-white rounded-full px-3 py-2.5 border border-[rgb(230,230,230)]">
@@ -258,7 +252,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </svg>
               <input
                 type="text"
-                placeholder="Search by location..."
+                placeholder={t('hero.searchByLocation')}
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
                 className="w-full pl-12 pr-4 py-3 bg-white rounded-full text-[15px] font-light outline-none border border-[rgb(230,230,230)] focus:border-[rgb(199,199,199)] transition-colors"
@@ -284,7 +278,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 value={selectedProject}
                 options={projectOptions}
                 onChange={onProjectChange}
-                placeholder="All Projects"
+                placeholder={t('hero.allProjects')}
                 width="w-full"
               />
             </div>
@@ -293,7 +287,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <div className="flex items-center gap-3">
               <input
                 type="number"
-                placeholder="Min m²"
+                placeholder={t('hero.min')}
                 value={minSpace}
                 onChange={(e) => onMinSpaceChange(e.target.value)}
                 className="w-28 px-4 py-2.5 bg-[rgb(243,243,243)] rounded-full text-[14px] font-light outline-none border border-transparent hover:border-[rgb(199,199,199)] transition-colors"
@@ -302,7 +296,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <span className="text-[rgb(136,136,136)] font-light">-</span>
               <input
                 type="number"
-                placeholder="Max m²"
+                placeholder={t('hero.max')}
                 value={maxSpace}
                 onChange={(e) => onMaxSpaceChange(e.target.value)}
                 className="w-28 px-4 py-2.5 bg-[rgb(243,243,243)] rounded-full text-[14px] font-light outline-none border border-transparent hover:border-[rgb(199,199,199)] transition-colors"
@@ -327,7 +321,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </svg>
               <input
                 type="text"
-                placeholder="Search by location..."
+                placeholder={t('hero.searchByLocation')}
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
                 className="w-full pl-12 pr-4 py-3 bg-[rgb(243,243,243)] rounded-full text-[14px] font-light outline-none hover:bg-[rgb(230,230,230)] transition-colors"
@@ -352,7 +346,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               value={selectedProject}
               options={projectOptions}
               onChange={onProjectChange}
-              placeholder="All Projects"
+              placeholder={t('hero.allProjects')}
               width="w-[160px]"
             />
 
@@ -360,7 +354,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <div className="flex items-center gap-2">
               <input
                 type="number"
-                placeholder="Min m²"
+                placeholder={t('hero.min')}
                 value={minSpace}
                 onChange={(e) => onMinSpaceChange(e.target.value)}
                 className="w-24 px-3 py-2 bg-[rgb(243,243,243)] rounded-full text-[14px] font-light outline-none hover:bg-[rgb(230,230,230)] transition-colors"
@@ -369,7 +363,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <span className="text-[rgb(136,136,136)]">-</span>
               <input
                 type="number"
-                placeholder="Max m²"
+                placeholder={t('hero.max')}
                 value={maxSpace}
                 onChange={(e) => onMaxSpaceChange(e.target.value)}
                 className="w-24 px-3 py-2 bg-[rgb(243,243,243)] rounded-full text-[14px] font-light outline-none hover:bg-[rgb(230,230,230)] transition-colors"
@@ -382,7 +376,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               className="ml-auto text-[14px] text-[rgb(136,136,136)] font-light whitespace-nowrap"
               style={{ fontFamily: 'Geist, sans-serif' }}
             >
-              {resultsCount} properties
+              {t('hero.propertiesCount', { count: resultsCount })}
             </span>
           </div>
         </div>

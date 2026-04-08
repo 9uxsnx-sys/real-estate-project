@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Bed, Bath, Maximize } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -34,6 +35,7 @@ export const PropertyCard = ({
   className,
   onClick,
 }: PropertyCardProps) => {
+  const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
 
@@ -167,7 +169,7 @@ export const PropertyCard = ({
                 'h-1.5 w-1.5 rounded-full transition-all',
                 currentIndex === index ? 'w-4 bg-white' : 'bg-white/50'
               )}
-              aria-label={`Go to image ${index + 1}`}
+              aria-label={`${t('gallery.goTo')} ${index + 1}`}
             />
           ))}
         </div>
@@ -221,7 +223,7 @@ export const PropertyCard = ({
           <div className="flex items-center gap-1 text-[rgb(136,136,136)]">
             <Maximize size={14} strokeWidth={1.5} />
             <span className="text-[12px]" style={{ fontFamily: 'Geist, sans-serif' }}>
-              {space} sqft
+              {space} {t('property.sqft')}
             </span>
           </div>
         </motion.div>

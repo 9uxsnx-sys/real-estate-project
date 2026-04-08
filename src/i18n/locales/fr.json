@@ -6,7 +6,10 @@
     "contactMobile": "Contactez-nous"
   },
   "hero": {
+    "ourProperties": "Nos Propriétés",
+    "ourProjects": "Nos Projets",
     "searchPlaceholder": "Rechercher par lieu, projet ou nom de propriété...",
+    "searchByLocation": "Rechercher par lieu...",
     "sortBy": "Trier par",
     "featured": "En vedette",
     "priceLow": "Prix: Croissant",
@@ -17,8 +20,9 @@
     "project": "Projet",
     "allProjects": "Tous les projets",
     "space": "Surface (m²)",
-    "min": "Min",
-    "max": "Max"
+    "min": "Min m²",
+    "max": "Max m²",
+    "propertiesCount": "{{count}} propriétés"
   },
   "property": {
     "beds": "chambres",
@@ -27,13 +31,15 @@
     "forSale": "À Vendre",
     "forInvestment": "Pour Investissement",
     "luxury": "Luxe",
-    "viewDetails": "Voir Détails",
+    "viewDetails": "Voir les détails",
+    "seeDetails": "Voir le détail",
     "backToProperties": "Retour aux Propriétés",
     "overview": "Vue d'ensemble",
     "features": "Caractéristiques",
     "location": "Emplacement",
     "propertyType": "Type de Propriété",
     "propertyCode": "Code Propriété",
+    "propertyCodeDesc": "Lorsque vous nous contactez à propos de cette propriété, veuillez fournir ce code pour que nous sachions de quelle propriété vous parlez.",
     "contactAgent": "Contacter l'Agent",
     "whatsapp": "WhatsApp",
     "downloadBrochure": "Télécharger Brochure",
@@ -48,10 +54,26 @@
     "units": "unités",
     "viewProject": "Voir le Projet",
     "exploreProperties": "Explorer les Propriétés",
+    "readyToFind": "Prêt à trouver votre maison ?",
+    "browseDescription": "Parcourez toutes les propriétés disponibles et trouvez celle qui vous convient",
     "customSection": {
       "overview": "Vue d'ensemble",
       "features": "Caractéristiques"
     }
+  },
+  "sidebar": {
+    "getInTouch": "Contactez-nous",
+    "sendMessage": "Envoyer un message",
+    "followUs": "Suivez-nous",
+    "contactDesc": "Vous pouvez nous joindre sur WhatsApp ou nous appeler directement:"
+  },
+  "gallery": {
+    "title": "Galerie",
+    "counter": "Image {{current}} sur {{total}}",
+    "close": "Fermer la galerie",
+    "previous": "Image précédente",
+    "next": "Image suivante",
+    "goTo": "Aller à l'image"
   },
   "common": {
     "loading": "Chargement...",

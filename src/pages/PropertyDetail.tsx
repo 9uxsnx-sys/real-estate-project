@@ -49,8 +49,9 @@ const getPropertyWithDetails = (id: string): PropertyDetailType | null => {
 export const PropertyDetail: React.FC = () => {
   const navigate = useNavigate();
   const { id, lang } = useParams<{ id: string; lang: string }>();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const currentLang = lang || 'en';
+  const isRTL = i18n.language === 'ar';
   
   const property = id ? getPropertyWithDetails(id) : null;
   
@@ -94,7 +95,11 @@ export const PropertyDetail: React.FC = () => {
           style={{ fontFamily: 'Geist, sans-serif' }}
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M19 12H5M12 19l-7-7 7-7" />
+            {isRTL ? (
+              <path d="M5 12h14M12 19l7-7-7-7" />
+            ) : (
+              <path d="M19 12H5M12 19l-7-7 7-7" />
+            )}
           </svg>
           {t('property.backToProperties')}
         </button>

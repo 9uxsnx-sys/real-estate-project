@@ -1,6 +1,7 @@
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, ArrowUpLeft } from 'lucide-react';
 
 interface InfoCardComponentProps {
   image: string;
@@ -17,6 +18,8 @@ export const InfoCardComponent = ({
   onExplore,
   projectNumber,
 }: InfoCardComponentProps) => {
+  const { t, i18n } = useTranslation();
+  const isRTL = i18n.language === 'ar';
   return (
     <motion.div
       initial={{ opacity: 0, x: 20 }}
@@ -25,13 +28,6 @@ export const InfoCardComponent = ({
       transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: 0.1 }}
       className="lg:col-span-4 flex flex-col gap-6"
     >
-      {/* Project Number Tag */}
-      {projectNumber && (
-        <span className="text-[11px] font-medium tracking-[0.2em] uppercase text-[rgb(180,180,180)]" style={{ fontFamily: 'Geist, sans-serif' }}>
-          Project {projectNumber}
-        </span>
-      )}
-      
       {/* Small Image */}
       <div className="relative w-full h-[200px] sm:h-[240px] lg:h-[260px] rounded-[24px] overflow-hidden group shrink-0">
         <img
@@ -59,12 +55,16 @@ export const InfoCardComponent = ({
         </p>
         <motion.button
           onClick={onExplore}
-          whileHover={{ x: 4 }}
+          whileHover={{ x: isRTL ? -4 : 4 }}
           className="inline-flex items-center gap-2 text-[rgb(44,44,44)] font-medium text-[14px] hover:opacity-70 transition-opacity group/link mt-2"
           style={{ fontFamily: 'Geist, sans-serif' }}
         >
-          See Detail
-          <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover/link:translate-x-1 group-hover/link:-translate-y-1" />
+          {t('property.seeDetails')}
+          {isRTL ? (
+            <ArrowUpLeft className="w-4 h-4 transition-transform duration-300 group-hover/link:-translate-x-1 group-hover/link:-translate-y-1" />
+          ) : (
+            <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover/link:translate-x-1 group-hover/link:-translate-y-1" />
+          )}
         </motion.button>
       </div>
     </motion.div>

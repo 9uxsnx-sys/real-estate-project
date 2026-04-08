@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Bed, Bath, Maximize } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -33,6 +34,7 @@ export const PropertyCardList = ({
   className,
   onClick,
 }: PropertyCardListProps) => {
+  const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
 
@@ -145,7 +147,7 @@ export const PropertyCardList = ({
                 'h-1.5 w-1.5 rounded-full transition-all',
                 currentIndex === index ? 'w-4 bg-white' : 'bg-white/50'
               )}
-              aria-label={`Go to image ${index + 1}`}
+              aria-label={`${t('gallery.goTo')} ${index + 1}`}
             />
           ))}
         </div>
@@ -182,19 +184,19 @@ export const PropertyCardList = ({
           <div className="flex items-center gap-1.5 text-[rgb(136,136,136)]">
             <Bed size={16} strokeWidth={1.5} />
             <span className="text-[13px]" style={{ fontFamily: 'Geist, sans-serif' }}>
-              {beds} Beds
+              {beds} {t('property.beds')}
             </span>
           </div>
           <div className="flex items-center gap-1.5 text-[rgb(136,136,136)]">
             <Bath size={16} strokeWidth={1.5} />
             <span className="text-[13px]" style={{ fontFamily: 'Geist, sans-serif' }}>
-              {baths} Baths
+              {baths} {t('property.baths')}
             </span>
           </div>
           <div className="flex items-center gap-1.5 text-[rgb(136,136,136)]">
             <Maximize size={16} strokeWidth={1.5} />
             <span className="text-[13px]" style={{ fontFamily: 'Geist, sans-serif' }}>
-              {space} sqft
+              {space} {t('property.sqft')}
             </span>
           </div>
         </div>
