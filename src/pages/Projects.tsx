@@ -1,5 +1,6 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { ProjectAlternatingSection } from '../components/project';
@@ -17,6 +18,9 @@ interface Project {
 
 export const Projects: React.FC = () => {
   const navigate = useNavigate();
+  const { lang } = useParams<{ lang: string }>();
+  const { t } = useTranslation();
+  const currentLang = lang || 'en';
 
   // Aggregate unique projects from properties data
   const getUniqueProjects = (): Project[] => {
@@ -52,7 +56,7 @@ export const Projects: React.FC = () => {
   const projects = getUniqueProjects();
 
   const handleProjectClick = (projectId: string) => {
-    navigate(`/projects/${projectId}`);
+    navigate(`/${currentLang}/projects/${projectId}`);
   };
 
   return (
@@ -70,19 +74,19 @@ export const Projects: React.FC = () => {
               className="text-[12px] font-medium tracking-[0.15em] uppercase text-[rgb(136,136,136)] block mb-4"
               style={{ fontFamily: 'Geist, sans-serif' }}
             >
-              Our Portfolio
+              {t('project.ourPortfolio')}
             </span>
             <h1
               className="text-[36px] md:text-[48px] lg:text-[56px] font-semibold text-[rgb(44,44,44)] leading-[1.1] mb-6"
               style={{ fontFamily: 'Geist, sans-serif' }}
             >
-              Exclusive Developments
+              {t('project.exclusiveDevelopments')}
             </h1>
             <p
               className="text-[16px] md:text-[18px] text-[rgb(136,136,136)] font-light leading-relaxed"
               style={{ fontFamily: 'Geist, sans-serif' }}
             >
-              Discover our curated collection of luxury properties across Los Angeles most prestigious neighborhoods.
+              {t('project.discoverOurPortfolio')}
             </p>
           </motion.div>
         </div>
@@ -112,21 +116,20 @@ export const Projects: React.FC = () => {
               className="text-[24px] md:text-[28px] font-semibold text-[rgb(44,44,44)] mb-4"
               style={{ fontFamily: 'Geist, sans-serif' }}
             >
-              Ready to find your home?
+              {t('project.readyToFindYourHome')}
             </h3>
             <p
               className="text-[14px] md:text-[16px] text-[rgb(136,136,136)] font-light mb-8"
               style={{ fontFamily: 'Geist, sans-serif' }}
             >
-              Browse all available properties across our developments
+              {t('project.browseAllAvailableProperties')}
             </p>
             <button
-              onClick={() => navigate('/')}
+              onClick={() => navigate(`/${currentLang}`)}
               className="inline-flex items-center gap-2 px-8 py-4 bg-black text-white rounded-full font-light text-[14px] transition-colors hover:bg-[rgb(44,44,44)] group"
               style={{ fontFamily: 'Geist, sans-serif' }}
             >
-              View All Properties
-              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+              {t('project.exploreProperties')} <ArrowRight className="w-4 h-4 ml-2" />
             </button>
           </motion.div>
         </div>

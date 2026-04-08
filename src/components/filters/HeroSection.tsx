@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { properties } from '../../data/properties';
 
 interface HeroSectionProps {
@@ -119,24 +120,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onMaxSpaceChange,
   resultsCount,
 }) => {
+  const { t } = useTranslation();
   // Get unique projects from properties data
   const projectOptions = React.useMemo(() => {
     const uniqueProjects = [...new Set(properties.map((p) => p.projectName))];
     return [
-      { value: '', label: 'All Projects' },
+      { value: '', label: t('hero.allProjects') },
       ...uniqueProjects.map((name) => ({ value: name, label: name })),
     ];
   }, []);
 
   const sortOptions = [
-    { value: 'featured', label: 'Featured' },
-    { value: 'price-low', label: 'Price: Low to High' },
-    { value: 'price-high', label: 'Price: High to Low' },
-    { value: 'newest', label: 'Newest' },
+    { value: 'featured', label: t('hero.featured') },
+    { value: 'price-low', label: t('hero.priceLow') },
+    { value: 'price-high', label: t('hero.priceHigh') },
+    { value: 'newest', label: t('hero.newest') },
   ];
 
   const propertyTypes = [
-    { value: '', label: 'All Types' },
+    { value: '', label: t('hero.allTypes') },
     { value: 'studio', label: 'Studio' },
     { value: 'f1', label: 'F1' },
     { value: 'f2', label: 'F2' },
@@ -155,13 +157,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             className="text-[22px] sm:text-[28px] md:text-[36px] font-semibold text-[rgb(44,44,44)] uppercase mb-1 md:mb-2"
             style={{ fontFamily: 'Geist, sans-serif' }}
           >
-            Properties <span className="text-[rgb(102,252,117)]">Listing</span>
+            {t('nav.properties')} <span className="text-[rgb(102,252,117)]">Listing</span>
           </h1>
           <p
             className="text-[13px] md:text-[16px] text-[rgb(136,136,136)] font-light max-w-[600px]"
             style={{ fontFamily: 'Geist, sans-serif' }}
           >
-            Browse and filter through our exclusive collection of premium real estate
+            {t('hero.searchPlaceholder')}
           </p>
         </div>
 
@@ -220,7 +222,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <div className="flex items-center gap-2 bg-white rounded-full px-3 py-2.5 border border-[rgb(230,230,230)]">
                 <input
                   type="number"
-                  placeholder="Min"
+                  placeholder={t('hero.min')}
                   value={minSpace}
                   onChange={(e) => onMinSpaceChange(e.target.value)}
                   className="w-full text-[14px] font-light outline-none bg-transparent text-center"
@@ -229,7 +231,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <span className="text-[rgb(136,136,136)] text-[12px]">-</span>
                 <input
                   type="number"
-                  placeholder="Max"
+                  placeholder={t('hero.max')}
                   value={maxSpace}
                   onChange={(e) => onMaxSpaceChange(e.target.value)}
                   className="w-full text-[14px] font-light outline-none bg-transparent text-center"

@@ -51,12 +51,16 @@ VistaHaven is a clean and scalable property listing platform designed to showcas
   - Any custom section the owner wants to add
 - **2x2 Gallery Grid:** Each section has a rectangular (16:9) 4-image gallery
 - **Overview & Features:** Each section has description and bullet-point features
+- **Properties in This Project:** Section showing up to 3 linked properties with "See More" button
+- **Image Gallery Modal:** Full-screen modal with swipe navigation and pinch-to-zoom support
 
 ## Project Structure
 
 ```
 src/
 ├── components/
+│   ├── ScrollToTop.tsx       # Scroll restoration on route change
+│   │
 │   ├── filters/              # Filter components
 │   │   ├── HeroSection.tsx   # Unified search & filter bar
 │   │   └── index.ts          # Barrel export
@@ -90,8 +94,8 @@ src/
 │   └── ui/                   # Reusable UI components
 │       ├── badge.tsx                       # Status badges
 │       ├── button.tsx                      # Button component
-│       ├── property-card.tsx               # Property card (shadcn)
-│       └── property-card-list.tsx          # List view card
+│       ├── ImageGalleryModal.tsx           # Full-screen image gallery modal
+│       └── property-card.tsx               # Property card (shadcn)
 │
 ├── pages/
 │   ├── PropertiesListing.tsx              # Main property listing page

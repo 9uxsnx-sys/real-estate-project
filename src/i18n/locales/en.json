@@ -1,0 +1,73 @@
+{
+  "nav": {
+    "properties": "Properties",
+    "projects": "Projects",
+    "contact": "Contact Us Now",
+    "contactMobile": "Contact Us"
+  },
+  "hero": {
+    "searchPlaceholder": "Search by location, project, or property name...",
+    "sortBy": "Sort by",
+    "featured": "Featured",
+    "priceLow": "Price: Low to High",
+    "priceHigh": "Price: High to Low",
+    "newest": "Newest",
+    "propertyType": "Property Type",
+    "allTypes": "All Types",
+    "project": "Project",
+    "allProjects": "All Projects",
+    "space": "Space (sqft)",
+    "min": "Min",
+    "max": "Max"
+  },
+  "property": {
+    "beds": "beds",
+    "baths": "baths",
+    "sqft": "sqft",
+    "forSale": "For Sale",
+    "forInvestment": "For Investment",
+    "luxury": "Luxury",
+    "viewDetails": "View Details",
+    "backToProperties": "Back to Properties",
+    "overview": "Overview",
+    "features": "Features",
+    "location": "Location",
+    "propertyType": "Property Type",
+    "propertyCode": "Property Code",
+    "contactAgent": "Contact Agent",
+    "whatsapp": "WhatsApp",
+    "downloadBrochure": "Download Brochure",
+    "share": "Share",
+    "save": "Save"
+  },
+  "project": {
+    "backToProjects": "Back to Projects",
+    "propertiesInProject": "Properties in This Project",
+    "seeMore": "See More",
+    "startingFrom": "Starting from",
+    "units": "units",
+    "viewProject": "View Project",
+    "exploreProperties": "Explore Properties",
+    "customSection": {
+      "overview": "Overview",
+      "features": "Features"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "notFound": "Not Found",
+    "tryAgain": "Try Again",
+    "viewAll": "View All",
+    "showMore": "Show More",
+    "showLess": "Show Less",
+    "close": "Close",
+    "next": "Next",
+    "previous": "Previous"
+  },
+  "footer": {
+    "rights": "All rights reserved",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  }
+}

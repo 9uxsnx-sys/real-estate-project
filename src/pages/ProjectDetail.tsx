@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   PropertyGallery,
   PropertySpecs,
@@ -47,7 +48,9 @@ const getPropertyWithDetails = (id: string): PropertyDetailType | null => {
 
 export const ProjectDetail: React.FC = () => {
   const navigate = useNavigate();
-  const { projectId } = useParams<{ projectId: string }>();
+  const { projectId, lang } = useParams<{ projectId: string; lang: string }>();
+  const { t } = useTranslation();
+  const currentLang = lang || 'en';
 
   // Find all properties in this project by project name (URL param is kebab-case)
   const projectProperties = properties.filter(
@@ -68,13 +71,13 @@ export const ProjectDetail: React.FC = () => {
             className="text-2xl font-semibold text-[rgb(44,44,44)] mb-4"
             style={{ fontFamily: 'Geist, sans-serif' }}
           >
-            Project Not Found
+            {t('common.notFound')}
           </h1>
           <button
-            onClick={() => navigate('/projects')}
+            onClick={() => navigate(`/${currentLang}/projects`)}
             className="px-6 py-3 bg-black text-white rounded-full hover:bg-[rgb(44,44,44)] transition-colors"
           >
-            Back to Projects
+            {t('project.backToProjects')}
           </button>
         </div>
       </div>
@@ -118,14 +121,14 @@ export const ProjectDetail: React.FC = () => {
       <div className="max-w-[1360px] mx-auto px-4 md:px-8 lg:px-20 py-6 md:py-10">
         {/* Back Button */}
         <button
-          onClick={() => navigate('/projects')}
+          onClick={() => navigate(`/${currentLang}/projects`)}
           className="flex items-center gap-2 text-[rgb(44,44,44)] hover:text-black transition-colors mb-6"
           style={{ fontFamily: 'Geist, sans-serif' }}
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
-          Back to Projects
+          {t('project.backToProjects')}
         </button>
 
         {/* Gallery - Full Width */}
@@ -151,7 +154,7 @@ export const ProjectDetail: React.FC = () => {
                 className="text-[20px] md:text-[24px] font-semibold text-[rgb(44,44,44)] mb-4"
                 style={{ fontFamily: 'Geist, sans-serif' }}
               >
-                Overview
+                {t('property.overview')}
               </h3>
               <p
                 className="text-[14px] md:text-[16px] text-[rgb(44,44,44)] font-light leading-relaxed"
@@ -184,16 +187,16 @@ export const ProjectDetail: React.FC = () => {
                   className="text-[20px] md:text-[24px] font-semibold text-[rgb(44,44,44)]"
                   style={{ fontFamily: 'Geist, sans-serif' }}
                 >
-                  Properties in This Project
+                  {t('project.propertiesInProject')}
                 </h3>
                 
                 {projectProperties.length >= 1 && (
                   <button
-                    onClick={() => navigate(`/?project=${encodeURIComponent(property.projectName)}`)}
+                    onClick={() => navigate(`/${currentLang}/?project=${encodeURIComponent(property.projectName)}`)}
                     className="flex items-center gap-1 text-[14px] font-light text-[rgb(44,44,44)] hover:text-black transition-colors"
                     style={{ fontFamily: 'Geist, sans-serif' }}
                   >
-                    See More
+                    {t('project.seeMore')}
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
@@ -215,7 +218,7 @@ export const ProjectDetail: React.FC = () => {
                     space={projProperty.sqft}
                     propertyType={projProperty.propertyType}
                     isNew={projProperty.featured}
-                    onClick={() => navigate(`/property/${projProperty.id}`)}
+                    onClick={() => navigate(`/${currentLang}/property/${projProperty.id}`)}
                   />
                 ))}
               </div>

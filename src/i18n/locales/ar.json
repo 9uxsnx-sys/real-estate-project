@@ -1,0 +1,73 @@
+{
+  "nav": {
+    "properties": "عقارات",
+    "projects": "مشاريع",
+    "contact": "اتصل بنا",
+    "contactMobile": "اتصل بنا"
+  },
+  "hero": {
+    "searchPlaceholder": "البحث بالموقع أو المشروع أو اسم العقار...",
+    "sortBy": "ترتيب حسب",
+    "featured": "مميز",
+    "priceLow": "السعر: من低到高",
+    "priceHigh": "السعر: من高到低",
+    "newest": "الأحدث",
+    "propertyType": "نوع العقار",
+    "allTypes": "جميع الأنواع",
+    "project": "المشروع",
+    "allProjects": "جميع المشاريع",
+    "space": "المساحة (قدم²)",
+    "min": "الحد الأدنى",
+    "max": "الحد الأقصى"
+  },
+  "property": {
+    "beds": "غرف",
+    "baths": "حمامات",
+    "sqft": "قدم²",
+    "forSale": "للبيع",
+    "forInvestment": "للاستثمار",
+    "luxury": "فاخر",
+    "viewDetails": "عرض التفاصيل",
+    "backToProperties": "العودة إلى العقارات",
+    "overview": "نظرة عامة",
+    "features": "المميزات",
+    "location": "الموقع",
+    "propertyType": "نوع العقار",
+    "propertyCode": "رمز العقار",
+    "contactAgent": "الاتصال بالوكيل",
+    "whatsapp": "واتساب",
+    "downloadBrochure": "تحميل الكتيب",
+    "share": "مشاركة",
+    "save": "حفظ"
+  },
+  "project": {
+    "backToProjects": "العودة إلى المشاريع",
+    "propertiesInProject": "عقارات في هذا المشروع",
+    "seeMore": "عرض المزيد",
+    "startingFrom": "يبدأ من",
+    "units": "وحدات",
+    "viewProject": "عرض المشروع",
+    "exploreProperties": "استكشاف العقارات",
+    "customSection": {
+      "overview": "نظرة عامة",
+      "features": "المميزات"
+    }
+  },
+  "common": {
+    "loading": "جارٍ التحميل...",
+    "error": "خطأ",
+    "notFound": "غير موجود",
+    "tryAgain": "حاول مرة أخرى",
+    "viewAll": "عرض الكل",
+    "showMore": "عرض المزيد",
+    "showLess": "عرض أقل",
+    "close": "إغلاق",
+    "next": "التالي",
+    "previous": "السابق"
+  },
+  "footer": {
+    "rights": "جميع الحقوق محفوظة",
+    "privacy": "سياسة الخصوصية",
+    "terms": "شروط الخدمة"
+  }
+}

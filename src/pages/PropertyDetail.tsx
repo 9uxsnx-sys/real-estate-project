@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Navigation } from '../components/layout';
 import { 
   PropertyGallery, 
@@ -47,7 +48,9 @@ const getPropertyWithDetails = (id: string): PropertyDetailType | null => {
 
 export const PropertyDetail: React.FC = () => {
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
+  const { id, lang } = useParams<{ id: string; lang: string }>();
+  const { t } = useTranslation();
+  const currentLang = lang || 'en';
   
   const property = id ? getPropertyWithDetails(id) : null;
   
@@ -60,13 +63,20 @@ export const PropertyDetail: React.FC = () => {
             className="text-2xl font-semibold text-[rgb(44,44,44)] mb-4"
             style={{ fontFamily: 'Geist, sans-serif' }}
           >
-            Property Not Found
+            {t('common.notFound')}
           </h1>
-          <button
-            onClick={() => navigate('/')}
-            className="px-6 py-3 bg-black text-white rounded-full hover:bg-[rgb(44,44,44)] transition-colors"
+          <p 
+            className="text-[rgb(136,136,136)] mb-6"
+            style={{ fontFamily: 'Geist, sans-serif' }}
           >
-            Back to Properties
+            The property you're looking for doesn't exist.
+          </p>
+          <button
+            onClick={() => navigate(`/${currentLang}`)}
+            className="px-6 py-3 bg-black text-white rounded-full"
+            style={{ fontFamily: 'Geist, sans-serif' }}
+          >
+            {t('property.backToProperties')}
           </button>
         </div>
       </div>
@@ -76,18 +86,17 @@ export const PropertyDetail: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
-      
-      <div className="max-w-[1360px] mx-auto px-4 md:px-8 lg:px-20 py-6 md:py-10">
+      <div className="max-w-[1360px] mx-auto px-4 md:px-8 lg:px-20 py-6">
         {/* Back Button */}
         <button
-          onClick={() => navigate('/')}
-          className="flex items-center gap-2 text-[rgb(44,44,44)] hover:text-black transition-colors mb-6"
+          onClick={() => navigate(`/${currentLang}`)}
+          className="flex items-center gap-2 text-[14px] text-[rgb(136,136,136)] hover:text-[rgb(44,44,44)] transition-colors mb-6"
           style={{ fontFamily: 'Geist, sans-serif' }}
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
-          Back to Properties
+          {t('property.backToProperties')}
         </button>
 
         {/* Gallery - Full Width */}
@@ -131,7 +140,7 @@ export const PropertyDetail: React.FC = () => {
                 className="text-[20px] md:text-[24px] font-semibold text-[rgb(44,44,44)] mb-4"
                 style={{ fontFamily: 'Geist, sans-serif' }}
               >
-                Overview
+                {t('property.overview')}
               </h3>
               <p 
                 className="text-[14px] md:text-[16px] text-[rgb(44,44,44)] font-light leading-relaxed"

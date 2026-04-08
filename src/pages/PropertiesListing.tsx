@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { PropertyCard } from '@/components/ui/property-card';
 import { HeroSection } from '../components/filters';
 import { properties } from '../data/properties';
@@ -10,6 +11,7 @@ interface PropertiesListingProps {
 }
 
 export const PropertiesListing: React.FC<PropertiesListingProps> = ({ onPropertyClick }) => {
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const projectParam = searchParams.get('project');
   
@@ -153,13 +155,13 @@ export const PropertiesListing: React.FC<PropertiesListingProps> = ({ onProperty
                 className="text-[18px] text-[rgb(44,44,44)] font-light mb-2"
                 style={{ fontFamily: 'Geist, sans-serif' }}
               >
-                No properties found
+                {t('common.notFound')}
               </p>
               <p
                 className="text-[14px] text-[rgb(136,136,136)] font-light"
                 style={{ fontFamily: 'Geist, sans-serif' }}
               >
-                Try adjusting your filters
+                {t('common.tryAgain')}
               </p>
             </div>
           )}
@@ -172,7 +174,7 @@ export const PropertiesListing: React.FC<PropertiesListingProps> = ({ onProperty
                 className="px-8 py-4 bg-black text-white rounded-full font-light text-[16px] transition-colors hover:bg-[rgb(44,44,44)]"
                 style={{ fontFamily: 'Geist, sans-serif' }}
               >
-                Load More Properties
+                {t('common.showMore')}
               </button>
             </div>
           )}
