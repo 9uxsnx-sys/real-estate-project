@@ -53,10 +53,10 @@ export const Navigation: React.FC = () => {
           {/* Desktop Navigation Links */}
           <div className="hidden md:flex items-center gap-8">
             <a
-              href="/"
+              href={`/${currentLang}`}
               onClick={(e) => {
                 e.preventDefault();
-                navigate('/');
+                navigate(`/${currentLang}`);
               }}
               className="text-[14px] font-light text-[rgb(44,44,44)] hover:text-[rgb(136,136,136)] transition-colors"
               style={{ fontFamily: 'Geist, sans-serif' }}
@@ -74,10 +74,17 @@ export const Navigation: React.FC = () => {
             >
               {t('nav.projects')}
             </a>
+            <a
+              href="#contact"
+              className="text-[14px] font-light text-[rgb(44,44,44)] hover:text-[rgb(136,136,136)] transition-colors"
+              style={{ fontFamily: 'Geist, sans-serif' }}
+            >
+              {t('nav.contact')}
+            </a>
           </div>
 
           {/* Language Switcher - Desktop */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center">
             <LanguageSwitcher />
           </div>
 
@@ -122,21 +129,6 @@ export const Navigation: React.FC = () => {
               </div>
             </div>
           )}
-
-          {/* Contact Button - Desktop */}
-          <a
-            href="#contact"
-            className="hidden md:flex items-center gap-3 px-6 py-3 bg-black text-white rounded-full"
-            style={{ fontFamily: 'Geist, sans-serif' }}
-          >
-            <span className="w-2 h-2 bg-[rgb(102,252,117)] rounded-full" />
-            <span className="font-light">{t('nav.contact')}</span>
-          </a>
-
-          {/* Mobile: Just Language Switcher */}
-          <div className="md:hidden flex items-center gap-2">
-            <LanguageSwitcher />
-          </div>
         </div>
       </div>
     </nav>
