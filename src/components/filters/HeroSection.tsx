@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { properties } from '../../data/properties';
 
 interface HeroSectionProps {
@@ -130,6 +132,35 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     ];
   }, [i18n.language, t]);
 
+  // GSAP animations
+  const heroRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const searchRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Hero entrance timeline
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+      // Title animation
+      tl.fromTo(
+        titleRef.current,
+        { y: 60, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8 }
+      );
+
+      // Search bar animation with bounce
+      tl.fromTo(
+        searchRef.current,
+        { y: 40, opacity: 0, scale: 0.95 },
+        { y: 0, opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(1.7)' },
+        '-=0.4'
+      );
+    }, heroRef);
+
+    return () => ctx.revert();
+  }, []);
+
   const sortOptions = [
     { value: 'featured', label: t('hero.featured') },
     { value: 'price-low', label: t('hero.priceLow') },
@@ -149,11 +180,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   ];
 
   return (
-    <section className="bg-white border-b border-[rgb(230,230,230)] py-6 md:py-10">
+    <section ref={heroRef} className="bg-white border-b border-[rgb(230,230,230)] py-6 md:py-10">
       <div className="max-w-[1360px] mx-auto px-4 md:px-8 lg:px-20">
         {/* Header */}
         <div className="mb-4 md:mb-6">
           <h1
+            ref={titleRef}
             className="text-[32px] md:text-[40px] lg:text-[48px] font-semibold text-[rgb(44,44,44)] leading-[1.2]"
             style={{ fontFamily: 'Geist, sans-serif' }}
           >
@@ -162,7 +194,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         </div>
 
         {/* Unified Search & Filter Bar */}
-        <div className="bg-[rgb(250,250,250)] rounded-2xl md:rounded-3xl p-3 md:p-5">
+        <div ref={searchRef} className="bg-[rgb(250,250,250)] rounded-2xl md:rounded-3xl p-3 md:p-5">
           
           {/* Mobile Layout */}
           <div className="flex flex-col gap-3 md:hidden">

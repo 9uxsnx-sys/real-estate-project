@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { LanguageSwitcher } from './LanguageSwitcher';
 
 export const Navigation: React.FC = () => {
@@ -9,9 +11,36 @@ export const Navigation: React.FC = () => {
   const { t } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const currentLang = lang || 'en';
+  const navRef = useRef<HTMLElement>(null);
+
+  // Smart navigation - hide on scroll down, show on scroll up
+  useEffect(() => {
+    if (!navRef.current) return;
+
+    const nav = navRef.current;
+    let lastScroll = 0;
+
+    const scrollTrigger = ScrollTrigger.create({
+      start: 'top top',
+      end: 'max',
+      onUpdate: (self) => {
+        const currentScroll = self.scroll();
+        if (currentScroll > lastScroll && currentScroll > 100) {
+          gsap.to(nav, { y: -100, duration: 0.3, ease: 'power2.inOut' });
+        } else {
+          gsap.to(nav, { y: 0, duration: 0.3, ease: 'power2.inOut' });
+        }
+        lastScroll = currentScroll;
+      },
+    });
+
+    return () => {
+      scrollTrigger.kill();
+    };
+  }, []);
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-white">
+    <nav ref={navRef} className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-white">
       <div className="max-w-[1360px] mx-auto px-4 md:px-8 lg:px-20">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}

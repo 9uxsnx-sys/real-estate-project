@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ProjectAlternatingSection } from '../components/project';
 import { properties } from '../data/properties';
 
@@ -21,6 +21,27 @@ export const Projects: React.FC = () => {
   const { lang } = useParams<{ lang: string }>();
   const { t } = useTranslation();
   const currentLang = lang || 'en';
+  const headerRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+
+  // GSAP entrance animation
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Title entrance
+      gsap.fromTo(
+        titleRef.current,
+        { y: 60, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: 'power3.out',
+        }
+      );
+    }, headerRef);
+
+    return () => ctx.revert();
+  }, []);
 
   // Aggregate unique projects from properties data
   const getUniqueProjects = (): Project[] => {
@@ -62,17 +83,15 @@ export const Projects: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Page Header */}
-      <section className="py-16 md:py-20 lg:py-24 border-b border-[rgb(230,230,230)]">
+      <section ref={headerRef} className="py-16 md:py-20 lg:py-24 border-b border-[rgb(230,230,230)]">
         <div className="max-w-[1360px] mx-auto px-6 sm:px-4 md:px-8 lg:px-20">
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+          <h1
+            ref={titleRef}
             className="text-[32px] md:text-[40px] lg:text-[48px] font-semibold text-[rgb(44,44,44)] leading-[1.2]"
             style={{ fontFamily: 'Geist, sans-serif' }}
           >
             {t('hero.ourProjects')}
-          </motion.h1>
+          </h1>
         </div>
       </section>
 

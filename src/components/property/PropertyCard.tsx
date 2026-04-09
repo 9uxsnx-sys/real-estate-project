@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Property } from '../../types';
 import { formatPrice, getPropertyTypeLabel } from '../../utils';
 
@@ -11,6 +13,72 @@ interface PropertyCardProps {
 
 export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onClick, viewMode = 'grid' }) => {
   const { t } = useTranslation();
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  // GSAP 3D tilt effect and scroll animation
+  useEffect(() => {
+    if (!cardRef.current) return;
+
+    const card = cardRef.current;
+    const ctx = gsap.context(() => {
+      // Scroll-triggered entrance animation
+      gsap.fromTo(
+        card,
+        { y: 60, opacity: 0, rotateX: 10 },
+        {
+          y: 0,
+          opacity: 1,
+          rotateX: 0,
+          duration: 0.6,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+        }
+      );
+
+      // 3D tilt effect on hover (desktop only)
+      const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+      if (!isTouchDevice) {
+        const handleMouseMove = (e: MouseEvent) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+
+          gsap.to(card, {
+            rotateY: ((x - centerX) / centerX) * 8,
+            rotateX: ((centerY - y) / centerY) * 8,
+            duration: 0.3,
+            ease: 'power2.out',
+          });
+        };
+
+        const handleMouseLeave = () => {
+          gsap.to(card, {
+            rotateY: 0,
+            rotateX: 0,
+            duration: 0.5,
+            ease: 'power2.out',
+          });
+        };
+
+        card.addEventListener('mousemove', handleMouseMove);
+        card.addEventListener('mouseleave', handleMouseLeave);
+
+        return () => {
+          card.removeEventListener('mousemove', handleMouseMove);
+          card.removeEventListener('mouseleave', handleMouseLeave);
+        };
+      }
+    }, card);
+
+    return () => ctx.revert();
+  }, []);
+
   const handleClick = () => {
     if (onClick) {
       onClick(property.id);
@@ -21,9 +89,14 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onClick, v
   if (viewMode === 'grid') {
     return (
       <div
+        ref={cardRef}
         onClick={handleClick}
-        className="group cursor-pointer bg-white rounded-4xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg h-full flex flex-col"
-        style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
+        className="group cursor-pointer bg-white rounded-4xl overflow-hidden transition-shadow duration-300 hover:shadow-xl h-full flex flex-col"
+        style={{
+          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+          transformStyle: 'preserve-3d',
+          perspective: '1000px',
+        }}
       >
         {/* Image Container - NO TAGS */}
         <div className="relative aspect-[4/3] overflow-hidden rounded-t-4xl flex-shrink-0">
