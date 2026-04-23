@@ -292,23 +292,27 @@ Each project section has two parts:
 
 ### 4.6 Custom Project Sections (Deployable)
 
+**Implementation: Repeatable Component** (NOT Dynamic Zones)
+- Owner adds sections in order
+- Each section is controlled - can't break layout
+- Simple to manage
+
 | Field | Type | Required | Notes |
 |-------|------|----------|-------|
-| `customSections` | Component (repeatable, dynamic) | No | Add unlimited sections |
+| `customSections` | Component (repeatable) | No | Add unlimited sections |
 
-**Custom Section Fields (each can be optional):**
+**Repeatable Component Fields:**
 
 | Field | Type | Notes |
 |-------|------|-------|
 | `title` | Text | Section title (optional) |
-| `gallery` | Media (array) | Gallery images (optional) |
+| `gallery` | Media (multiple) | Gallery images (optional) |
 | `description` | Rich Text | Description (optional) |
 | `features` | Component | Features list (optional) |
 
 **Deploy Logic:**
 - Any combination of fields allowed
-- Order matters - each new section appears after previous
-- Unlimited sections can be added
+- Add unlimited sections
 - All custom sections appear AFTER Features section, BEFORE Google Maps
 
 ### 4.7 Google Maps Embed
@@ -348,7 +352,7 @@ Each project section has two parts:
 | `place` | Text | Required |
 | `description` | Rich Text | Optional |
 | `features` | Component (repeatable) | Optional |
-| `custom_sections` | Component (repeatable, dynamic) | Optional |
+| `custom_sections` | Component (repeatable) | Optional |
 | `google_map_embed` | Text | Optional |
 
 **Component: ProjectFeature**
@@ -357,7 +361,7 @@ Each project section has two parts:
 |-------|------|------------|
 | `name` | Text | Required |
 
-**Component: CustomProjectSection (Dynamic)**
+**Component: CustomProjectSection (Repeatable)**
 
 | Field | Type | Validations |
 |-------|------|------------|
@@ -367,3 +371,24 @@ Each project section has two parts:
 | `features` | Component (repeatable) | Optional |
 
 ---
+
+## Strapi Features Used
+
+| Feature | Used For |
+|---------|---------|
+| **Collections** | Property, Project (content types) |
+| **Components** | Features, CustomProjectSection (repeatable) |
+| **Media Library** | Property/Project images, Gallery |
+| **i18n Plugin** | Multi-language content |
+| **Relation** | Property → Project (1-to-many) |
+
+---
+
+## Implementation Order
+
+1. **Setup Strapi** - Install & configure
+2. **Create Content Types** - Property, Project
+3. **Create Components** - Features, CustomProjectSection
+4. **Add Test Data** - Create sample properties/projects
+5. **Connect Frontend** - Update React to fetch from Strapi API
+6. **Test & Deploy** - Test all pages, deploy
